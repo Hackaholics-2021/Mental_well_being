@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <!-- favicon -->
+        <link rel="icon" href="data:,">
+        <link rel="stylesheet" type="text/css" href="C:\Users\Admin\OneDrive\Documents\python\my project-gauni\hackathon\static\css\hack.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}">
+        <style>
+            body{
+                
+                font-family: Georgia;
+                background-color: rgb(211, 216, 185);
+                background-color:rgb(225, 226, 220);
+                max-width:100%;height:auto;
+                overflow: hidden;
+            }
+            section.model-3{
+                width:50%;
+            }
+            section.model-3 .javaScript:before {
+                -webkit-transform: rotate(var(--value));
+                transform: rotate(var(--value));
+                border-color: rgb(11, 107, 110);
+            }
+            /* for score donutchart */
+
+            /* fordonut chart */
+            section {
+                width: 33.33%;
+                /* left: 300px; */
+                top:30px;
+                text-align: center;
+                min-width: 300px;
+                margin-right:0px;
+                position: relative; 
+            }
+            /* donut */
+            .graph {
+                width: 300px;
+                height: 150px;
+                position: absolute;
+                margin: auto;
+                text-align: center;
+                color: #fff;
+                font-size: 22px;
+                line-height: 280px;
+                font-weight: 600;
+                border-radius: 150px 150px 0 0;
+                overflow: hidden;
+                color: #0ff;
+            }
+            /* donut */
+            .graph:before, .graph:after {
+                content: ''; 
+                width: 300px;
+                height: 150px;
+                border: 50px solid #0ff;
+                border-top: none;
+                position: absolute;
+                transition: 0.3s;
+                -webkit-transform-origin: 50% 0%;
+                transform-origin: 50% 0%;
+                border-radius: 0 0 300px 300px;
+                -webkit-animation: demo 2s;
+                animation: demo 2s;
+                left: 0;
+                top: 100%;
+                z-index: 5;
+            }
+            .graph:after {
+                z-index: 3; 
+                border-color: rgba(0, 0, 0, 0.15);
+                -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+            .graph:hover:before {
+                opacity: .8;
+                cursor: pointer; 
+            }
+            .graph:hover + .tooltip {
+                bottom: 105%;
+                opacity: 1; 
+            }
+            .donut{
+                position:absolute;
+                top:15%;
+                left: 50px;
+                width:50%;
+                float: left;
+                text-align:center;
+            }
+
+            .multi-graph {
+                width:50%;
+                height: 150px; 
+                position: absolute;
+                margin: 0;
+                /* top:20px;
+                right:200px; */
+                font-size: 22px;
+                line-height: 280px;
+                font-weight: 600;
+            }
+            .multi-graph:before {
+                content: '';
+                width: 300px;
+                height: 150px;
+                border: 50px solid rgba(0, 0, 0, 0.15);
+                border-bottom: none;
+                position: absolute;
+                -webkit-transform-origin: 50% 0%;
+                transform-origin: 50% 0%;
+                border-radius: 300px 300px 0 0;
+                left: 0;
+                top: 0;
+            }
+            .multi-graph{
+                margin: 0%;
+            }
+            .multi-graph .graph {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+            }
+            .multi-graph .graph:after {
+                background: #eee;
+                border: medium none;
+                border-radius: 2px;
+                color: #333;
+                font-weight: 200;
+                /* content: "" attr(data-name) ""; */
+                display: inline-block;
+                font-size: 12px;
+                height: 20px;
+                left: 50%;
+                line-height: 20px;
+                padding: 0 5px;
+                top: 50px;
+                z-index: 0;
+                -webkit-transform: rotate(0deg) translateX(-50%);
+                transform: rotate(0deg) translateX(-50%);
+                width: auto;
+                opacity: 0;
+            }
+            .multi-graph .graph:hover:after {
+                opacity: 1;
+                top: 70px;
+            }
+            section.model-3 .jQuery:before {
+                -webkit-transform: rotate(130deg);
+                transform: rotate(130deg);
+                border-color: #e69808;
+            }
+
+            section.model-3 .graph {
+                color: #2DABD8;
+            }
+            @-webkit-keyframes demo {
+                0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+                }
+                50% {
+                -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
+                }
+            }
+            @keyframes demo {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                50% {
+                    -webkit-transform: rotate(180deg);
+                    transform: rotate(180deg);
+                }
+            }
+            
+            .comments iframe{
+                position: absolute;
+                top:30%;                
+                background-color: rgba(255, 255, 255, 0);
+                width:100%;
+            }
+            
+            .navbar{
+                height:100px;
+                font-size: 20px;
+                
+            }
+            
+            .col-sm-6{
+                float: left;
+                width:50%;
+            }
+            @media screen  and (max-width: 800px){
+                .col-sm-6 {
+                    width: 50%; /* The width is 100%, when the viewport is 800px or smaller */
+                }
+                section{
+                    display: none;
+                }
+            }
+            
+            .site-content{
+                position: absolute;
+                top:170px;
+                width: 100%;               
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Nav bar at top and site name -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand text-light" href="#"><b>WE4YOU</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse text-right text-light bg-dark" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto" style="padding-right: 20px;">
+                    <li class="nav-item active" style="padding-right: 20px;" >
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 20px;">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#about">About</a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 20px;">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#contact">Contact</a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 20px;">
+                        <a class="nav-link text-light" href="{{ url_for('Booking_details',userid=userid) }}">Your Appoinments</a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 20px;">
+                        <a class="nav-link text-light" href="{{ url_for('Logout') }}">Logout</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+        <div class="container-fluid site-content">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="donut" style="text-align: center;z-index: 5;">
+                        <h1>Your Score :{{score}}</h1>
+                        <section class="model-3 sm" >
+                            <div class="multi-graph">
+                            <!-- <div class="graph jQuery" data-name="jQuery"> </div> -->
+                            <div class="graph javaScript" data-name="javaScript" style="--value:{{score}}deg"></div>
+                            </div>
+                        </section>
+                        <!-- <p class="labelsfordonut1"></p><p class="labeltext1">&nbsp;&nbsp;Male Students&nbsp;&nbsp;</p><h2 class="labelsfordonut2"></h2><p class="labeltext2">&nbsp;&nbsp;&nbsp;Female Students</p> -->
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="comments container" style="margin-top: 10%;">
+                        {% if score>120 %}
+                            <h1 style="margin:5%;text-align: center;">Wow!! You have a great mental stability..Keep it up!</h1>
+                            <iframe src="{{ url_for('static', filename='6k2.gif') }}" height="450px"  frameborder="0" scrolling="no" ></iframe>
+                        
+                        {% elif score<120 and score>60 %}
+                            <h1>Woo hoo!. You are doing fine..If you want to consult a doctor here your are.. </h1>
+                            <form action="{{ url_for('Find',userid=userid) }}"  method="GET">
+                                <button type="submit" class="btn btn-dark btn-lg" style="z-index: 100;float: left;">Book a session</button>
+                            </form>
+                            <iframe src="{{ url_for('static', filename='second.gif') }}" height="450px"  frameborder="0" scrolling="no" ></iframe>
+            
+                            
+                        {% else %} 
+                            <h1>Oops! you have a bad mental stability.. Would you mind to consult a doctor asap.</h1>
+                            <form action="{{ url_for('Booking_direct',area=area,userid=userid) }}"  method="GET">
+                                <button type="submit" class="btn btn-dark btn-lg">Book a session</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div> 
+            <div class="container-fluid" style="background-color: rgba(228, 228, 228, 0);margin: 3% 0% 0% 0%;text-align: center;padding: 20px;border-radius: 5px;">
+                <h3><b>Don't just stop here</b>, Go on and Take Tests on different Areas and Find out how Mentally strong you are!!!</h3><br>
+                <h5> <em><b>WE 4 YOU</b></em> provides different Areas to take test on how your Mental well-being is.
+                    Also you are made to directly contact the <em><b>Therapist Experts</b></em> in just a few clicks.
+                </h5>
+                <br>
+                <button class="btn btn-dark btn-lg"><a href="{{ url_for('Self_assess',userid=userid) }}" class="text-light" style="text-decoration: none;">SELF ASSESSMENT</a></button>
+            </div>    
+        </div>
+        
+    </body>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+    <!-- plugin for jquery validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- link for jquery validation
+    <script src = "{{('/static/jquery/val.js')}}"> </script> -->
+</html>

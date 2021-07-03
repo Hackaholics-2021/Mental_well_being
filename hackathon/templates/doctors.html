@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Health care workers</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://github.com/rubyeffect/easy_fill/tree/master/lib/easy_fill-0.0.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}">
+        
+        <style>
+            body{
+                background-color:rgb(225, 226, 220);
+                font-family: 'Georgia';
+                font-size:20px;
+                overflow: hidden;
+            }
+
+            .navbar{
+                height:100px;
+                font-size:20px;
+            }
+
+            .nav-link{
+                margin-right: 20px;
+            }
+            .mm-survey {
+                margin-top: 30px;
+                margin-bottom: 50px;
+            }
+
+            .mm-survey-container {
+                width: 100%;
+                min-height: 400px;
+                border-radius: 5px;
+                background: #fafafa;
+            }
+
+            .mm-survey-results-container {
+                width: 100%;
+                min-height: 600px;
+                background: #fafafa;
+            }
+
+            .mm-survey-page {
+                display: none;
+                font-family: 'Raleway';
+                font-weight: 100;
+                padding: 40px;
+            }
+
+            .mm-survey-page.active {
+                display: block;
+            }
+
+            .mm-survey-controller {
+                position: relative;
+                height: 60px;
+                border-radius: 5px;
+                background: rgb(49, 49, 49);
+                padding: 9px 14px;
+            }
+
+            .mm-survey-results-controller {
+                position: relative;
+                height: 60px;
+                background: rgb(88, 88, 88);
+                padding: 12px 14px;
+            }
+
+            .mm-back-btn {
+                display: block;
+                border-radius: 5px;
+                position: relative;
+                float: left;
+            }
+
+            .mm-prev-btn {
+                display: block;
+                position: relative;
+                border-radius: 5px;
+                float: left;
+            }
+
+            .mm-next-btn {
+                display: block;
+                /* opacity: 0.25; */
+                border-radius: 5px;
+                position: relative;
+                float: right;
+            }
+
+            .mm-finish-btn {
+                display: none;
+                position: relative;
+                border-radius: 5px;
+                float: right;
+            }
+
+            .mm-finish-btn button {
+                background: #70c2c5 !important;
+                color: rgb(0, 0, 0);
+                border-radius: 5px;
+            }
+
+            .mm-survey-controller button {
+                
+                border: none;
+                border-radius: 5px;
+                padding: 8px 18px;
+                font-family: 'Raleway';
+                font-weight: 300;
+            }
+
+            .mm-survey-results-controller button {
+                background: #fff;
+                border: none;
+                border-radius: 5px;
+                padding: 8px 18px;
+            }
+
+            .mm-survey-progress {
+                width: 100%;
+                height: 30px;
+                border-radius: 5px;
+                background: #f5f5f5;
+                overflow: hidden;
+            }
+
+            .mm-progress {
+                transition: width 0.5s ease-in-out;
+            }
+
+            .mm-survey-progress-bar {
+                height: 30px;
+                width: 0%;
+                border-radius: 5px;
+                background: linear-gradient(to left, #95c5ca, #767e7c);
+            }
+
+            .mm-survey-q {
+                list-style-type: none;
+                padding: 0px;
+            }
+
+            .mm-survey-q li {
+                display: block;
+                padding: 20px 0px;
+                margin-bottom: 10px;
+                width: 100%;
+                background: #fff;
+            }
+
+            .mm-survey-q li input {
+                width: 100%;
+            }
+
+            .mm-survery-content label {
+                width: 100%;
+                padding: 10px 10px;
+                margin: 0px !important;
+            }
+
+            .mm-survery-content label:hover {
+                cursor: pointer;
+            }
+
+            .mm-survey-question {
+                min-height: 100px;
+            }
+
+            .mm-survey-question p {
+                font-size: 22px;
+                font-weight: 200;
+                margin-bottom: 20px;
+                line-height: 40px;
+            }
+
+            .mm-survery-content label p {
+                display: inline-block;
+                position: relative;
+                top: 2px;
+                left: 5px;
+                margin: 0px;
+            }
+
+            input[type="radio"] {
+                display: none;
+            }
+
+            input[type="radio"] + label {
+                color: #292321;
+                font-family: 'Raleway';
+                font-weight: 300;
+                font-size: 20px;
+            }
+
+            input[type="radio"] + label span {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                margin: 2px 4px 0 0;
+                vertical-align: middle;
+                cursor: pointer;
+                -moz-border-radius: 50%;
+                border-radius: 50%;
+            }
+
+            input[type="radio"] + label span {
+                background-color: #333;
+            }
+
+            input[type="radio"]:checked + label span {
+                border: 2px solid #80d0df;
+                background: transparent;
+            }
+
+            input[type="radio"] + label span,
+            input[type="radio"]:checked + label span {
+                -webkit-transition: background-color 0.20s ease-in-out;
+                -o-transition: background-color 0.20s ease-in-out;
+                -moz-transition: background-color 0.20s ease-in-out;
+                transition: background-color 0.20s ease-in-out;
+            }
+
+            .mm-survey-item {
+                background: #fff;
+                margin-bottom: 15px;
+                
+                border-bottom: 1px solid rgba(33,33,33,0.15);
+                border-radius: 0px 0px 4px 4px;
+            }
+
+            .mm-prev-btn button:focus, .mm-next-btn button:focus, .mm-finish-btn button:focus {
+                outline: none;
+                border: none;
+            }
+
+            .mm-survey.okay .mm-next-btn {
+                display: inline-block;
+                opacity: 1;
+            }
+
+            .mm-finish-btn.active {
+                display: inline-block;
+            }
+
+            .mm-survey-results {
+                display: none;
+            }
+
+            .mm-survey-results-score {
+                margin: 0px;
+                padding: 0px;
+                padding-top: 40px;
+                padding-bottom: 40px;
+                text-align: center;
+                font-size: 80px;
+                font-family: 'Raleway';
+                font-weight: 600;
+                letter-spacing: -6px;
+            }
+
+            .mm-survey-results-list {
+                list-style-type: none;
+                padding: 0px 15px;
+                margin: 0px;
+            }
+
+            .mm-survey-results-item {
+                color: #fff;
+                margin-top: 10px;
+                padding: 15px 15px 15px 0px;
+                font-family: 'Raleway';
+                font-weight: 300;
+            }
+
+            .mm-survey-results-item.correct {
+                background: linear-gradient(to left, #4CB8C4, #3CD3AD);
+            }
+
+            .mm-survey-results-item.incorrect {
+                background: linear-gradient(to left, #d33c62, #dc1144);
+            }
+
+            .mm-item-number {
+                height: 40px;
+                position: relative;
+                padding: 17px;
+                background: #333;
+                color: #fff;
+            }
+
+            .mm-item-info {
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand text-light" href="#"><strong>WE4YOU</strong></a>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse text-right text-light bg-dark" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#contact">Contact</a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link text-light" href="{{ url_for('Booking_details',userid=userid) }}">Your Appoinments <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Logout') }}">Logout</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+        <div class="container">
+            <div class="col-sm-12">
+                <div class="mm-survey">
+                    <h1>HEALTH CARE</h1>
+    
+                    <div class="mm-survey-progress">
+                        <div class="mm-survey-progress-bar mm-progress"></div>
+                    </div>
+    
+                    <div class="mm-survey-results">
+                        
+                        <div class="mm-survey-results-controller">
+                            <div class="mm-back-btn">
+                                <button>Back</button>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="mm-survey-bottom">
+                        <div class="mm-survey-container">
+                            <form action="{{ url_for('Doctors',userid=userid) }}" method="POST">
+                                <div class="mm-survey-page active" data-page="1">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>1. Do you feel getting impatient when you talk with your co-workers or patients?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio1" data-item="1" name="example1" value="Never" />
+                                            <label for="radio1"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio2" data-item="1" name="example1" value="Sometimes" />
+                                            <label for="radio2"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio3" data-item="1" name="example1" value="Fairly Often" />
+                                            <label for="radio3"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio4" data-item="1" name="example1" value="Very Often" />
+                                            <label for="radio4"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="2">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>2. Do you have a tendency to take your anger out on someone other than the person you're angry with?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio5" data-item="2" name="example2" value="Never" />
+                                            <label for="radio5"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio6" data-item="2" name="example2" value="Sometimes" />
+                                            <label for="radio6"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio7" data-item="2" name="example2" value="Fairly Often" />
+                                            <label for="radio7"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio8" data-item="2" name="example2" value="Very Often" />
+                                            <label for="radio8"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="3">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>3. Have you been treated in a rude or disrespectful manner by your patients or co-workers?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio9" data-item="3" name="example3" value="Never" />
+                                            <label for="radio9"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio10" data-item="3" name="example3" value="Sometimes" />
+                                            <label for="radio10"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio11" data-item="3" name="example3" value="Fairly Often" />
+                                            <label for="radio11"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio12" data-item="3" name="example3" value="Very Often" />
+                                            <label for="radio12"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="4">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>4. Do you fee like you are not able to stop or control worrying?
+                                            </p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio13" data-item="4" name="example4" value="Never" />
+                                            <label for="radio13"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio14" data-item="4" name="example4" value="Sometimes" />
+                                            <label for="radio14"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio15" data-item="4" name="example4" value="Fairly Often" />
+                                            <label for="radio15"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio16" data-item="4" name="example4" value="Very Often" />
+                                            <label for="radio16"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="5">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>5. Do you worry excessively and feel overwhelmed with responsibilities?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio17" data-item="5" name="example5" value="Never" />
+                                            <label for="radio17"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio18" data-item="5" name="example5" value="Sometimes" />
+                                            <label for="radio18"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio19" data-item="5" name="example5" value="Fairly Often" />
+                                            <label for="radio19"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio20" data-item="5" name="example5" value="Very Often" />
+                                            <label for="radio20"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="6">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>6. Do you struggle to focus on your tasks?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio21" data-item="6" name="example6" value="Never" />
+                                            <label for="radio21"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio22" data-item="6" name="example6" value="Sometimes" />
+                                            <label for="radio22"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio23" data-item="6" name="example6" value="Fairly Often" />
+                                            <label for="radio23"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio24" data-item="6" name="example6" value="Very Often" />
+                                            <label for="radio24"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="7">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>7. Do you feel like your life was out of control?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio25" data-item="7" name="example7" value="Never" />
+                                            <label for="radio25"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio26" data-item="7" name="example7" value="Sometimes" />
+                                            <label for="radio26"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio27" data-item="7" name="example7" value="Fairly Often" />
+                                            <label for="radio27"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio28" data-item="7" name="example7" value="Very Often" />
+                                            <label for="radio28"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="8">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>8. Do you find it hard to calm down after something upset you ?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio29" data-item="8" name="example8" value="Never" />
+                                            <label for="radio29"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio30" data-item="8" name="example8" value="Sometimes" />
+                                            <label for="radio30"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio31" data-item="8" name="example8" value="Fairly Often" />
+                                            <label for="radio31"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio32" data-item="8" name="example8" value="Very Often" />
+                                            <label for="radio32"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="9">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>9. Do you feel like you have not been given the praise for which you felt entitled?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio33" data-item="9" name="example9" value="Never" />
+                                            <label for="radio33"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio34" data-item="9" name="example9" value="Sometimes" />
+                                            <label for="radio34"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio35" data-item="9" name="example9" value="Fairly Often" />
+                                            <label for="radio35"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio36" data-item="9" name="example9" value="Very Often" />
+                                            <label for="radio36"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="10">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>10. Do you get upset when others disagree with you?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio37" data-item="10" name="example10" value="Never" />
+                                            <label for="radio37"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio38" data-item="10" name="example10" value="Sometimes" />
+                                            <label for="radio38"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio39" data-item="10" name="example10" value="Fairly Often" />
+                                            <label for="radio39"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio40" data-item="10" name="example10" value="Very Often" />
+                                            <label for="radio40"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="11">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>11. Do you have a manageable workload?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio41" data-item="11" name="example11" value="Never" />
+                                            <label for="radio41"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio42" data-item="11" name="example11" value="Sometimes" />
+                                            <label for="radio42"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio43" data-item="11" name="example11" value="Fairly Often" />
+                                            <label for="radio43"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio44" data-item="11" name="example11" value="Very Often" />
+                                            <label for="radio44"><span></span><p>Very Often</p></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mm-survey-page" data-page="12">
+                                    <div class="mm-survery-content">
+                                        <div class="mm-survey-question">
+                                            <p>12. Have you ever have thought that you don't get time to spend with your family and friends?</p>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio45" data-item="12" name="example12" value="Never" />
+                                            <label for="radio45"><span></span><p>Never</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio46" data-item="12" name="example12" value="Sometimes" />
+                                            <label for="radio46"><span></span><p>Sometimes</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio47" data-item="12" name="example12" value="Fairly Often" />
+                                            <label for="radio47"><span></span><p>Fairly Often</p></label>
+                                        </div>
+                                        <div class="mm-survey-item">
+                                            <input type="radio" id="radio48" data-item="12" name="example12" value="Very Often" />
+                                            <label for="radio48"><span></span><p>Very Often</p></label>
+                                        </div>
+                                        <div style="float: right;">
+                                          <button type="submit" class="btn btn-lg btn-dark" id="sub" disabled="true">Submit</button>
+                                      </div>
+                                      <br><br><br>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+    
+                        <div class="mm-survey-controller">
+                          <div class="mm-prev-btn">
+                              <button>Prev</button>
+                          </div>
+                          <div class="mm-next-btn">
+                              <button disabled="true">Next</button>
+                          </div>
+                          
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            jQuery('.mm-prev-btn').hide();
+
+            var x;
+            var count;
+            var current;
+            var percent;
+            var z = [];
+
+            init();
+            getCurrentSlide();
+            goToNext();
+            goToPrev();
+            getCount();
+            // checkStatus();
+            // buttonConfig();
+            buildStatus();
+            deliverStatus();
+            submitData();
+            goBack();
+
+            function init() {
+                
+                jQuery('.mm-survey-container .mm-survey-page').each(function() {
+
+                    var item;
+                    var page;
+
+                    item = jQuery(this);
+                    page = item.data('page');
+
+                    item.addClass('mm-page-'+page);
+                    //item.html(page);
+
+                });
+
+            }
+
+            function getCount() {
+
+                count = jQuery('.mm-survey-page').length+1;
+                return count;
+
+            }
+
+            function goToNext() {
+
+                jQuery('.mm-next-btn').on('click', function() {
+                    goToSlide(x);
+                    getCount();
+                    current = x + 1;
+                    var g = current/count;
+                    buildProgress(g);
+                    var y = (count + 1);
+                    getButtons();
+                    jQuery('.mm-survey-page').removeClass('active');
+                    jQuery('.mm-page-'+current).addClass('active');
+                    getCurrentSlide();
+                    checkStatus();
+                    if( jQuery('.mm-page-'+count).hasClass('active') ){
+                        if( jQuery('.mm-page-'+count).hasClass('pass') ) {
+                            jQuery('.mm-finish-btn').addClass('active');
+                        }
+                        else {
+                            jQuery('.mm-page-'+count+' .mm-survery-content .mm-survey-item').on('click', function() {
+                                jQuery('.mm-finish-btn').addClass('active');
+                            });
+                        }
+                    }
+                    else {
+                        jQuery('.mm-finish-btn').removeClass('active');
+                        if( jQuery('.mm-page-'+current).hasClass('pass') ) {
+                            jQuery('.mm-survey-container').addClass('good');
+                            jQuery('.mm-survey').addClass('okay');
+                        }
+                        else {
+                            jQuery('.mm-survey-container').removeClass('good');
+                            jQuery('.mm-survey').removeClass('okay');
+                        }
+                    }
+                    buttonConfig();
+                });
+
+            }
+
+            function goToPrev() {
+
+                jQuery('.mm-prev-btn').on('click', function() {
+                    goToSlide(x);
+                    getCount();         
+                    current = (x - 1);
+                    var g = current/count;
+                    buildProgress(g);
+                    var y = count;
+                    getButtons();
+                    jQuery('.mm-survey-page').removeClass('active');
+                    jQuery('.mm-page-'+current).addClass('active');
+                    getCurrentSlide();
+                    checkStatus();
+                    jQuery('.mm-finish-btn').removeClass('active');
+                    if( jQuery('.mm-page-'+current).hasClass('pass') ) {
+                        jQuery('.mm-survey-container').addClass('good');
+                        jQuery('.mm-survey').addClass('okay');
+                    }
+                    else {
+                        jQuery('.mm-survey-container').removeClass('good');
+                        jQuery('.mm-survey').removeClass('okay');
+                    }
+                    buttonConfig();
+                });
+
+            }
+
+            function buildProgress(g) {
+
+                if(g > 1){
+                    g = g - 1;
+                }
+                else if (g === 0) {
+                    g = 1;
+                }
+                g = g * 100;
+                jQuery('.mm-survey-progress-bar').css({ 'width' : g+'%' });
+
+            }
+
+            function goToSlide(x) {
+
+                return x;
+
+            }
+
+            function getCurrentSlide() {
+
+                jQuery('.mm-survey-page').each(function() {
+
+                    var item;
+
+                    item = jQuery(this);
+
+                    if( jQuery(item).hasClass('active') ) {
+                        x = item.data('page');
+                    }
+                    else {
+                        
+                    }
+
+                    return x;
+
+                });
+
+            }
+
+            function getButtons() {
+
+                if(current === 0) {
+                    current = y;
+                }
+                if(current === count) {
+                    jQuery('.mm-next-btn').hide();
+                }
+                else if(current === 1) {
+                    jQuery('.mm-prev-btn').hide();
+                }
+                else {
+                    jQuery('.mm-next-btn').show();
+                    jQuery('.mm-prev-btn').show();
+                }
+
+            }
+
+            jQuery('.mm-survey-q li input').each(function() {
+
+                var item;
+                item = jQuery(this);
+
+                jQuery(item).on('click', function() {
+                    if( jQuery('input:checked').length > 0 ) {
+                        // console.log(item.val());
+                        jQuery('label').parent().removeClass('active');
+                        item.closest( 'li' ).addClass('active');
+                    }
+                    else {
+                        //
+                    }
+                });
+
+            });
+
+            percent = (x/count) * 100;
+            jQuery('.mm-survey-progress-bar').css({ 'width' : percent+'%' });
+
+            function checkStatus() {
+                jQuery('.mm-survery-content .mm-survey-item').on('click', function() {
+                    var item;
+                    item = jQuery(this);
+                    item.closest('.mm-survey-page').addClass('pass');
+                });
+            }
+
+            function buildStatus() {
+                jQuery('.mm-survery-content .mm-survey-item').on('click', function() {
+                    var item;
+                    item = jQuery(this);
+                    item.addClass('bingo');
+                    item.closest('.mm-survey-page').addClass('pass');
+                    jQuery('.mm-survey-container').addClass('good');
+                });
+            }
+
+            function deliverStatus() {
+                jQuery('.mm-survey-item').on('click', function() {
+                    if( jQuery('.mm-survey-container').hasClass('good') ){
+                        jQuery('.mm-survey').addClass('okay');
+                    }
+                    else {
+                        jQuery('.mm-survey').removeClass('okay');   
+                    }
+                    buttonConfig();
+                });
+            }
+
+            function lastPage() {
+                if( jQuery('.mm-next-btn').hasClass('cool') ) {
+                    alert('cool');
+                }
+            }
+
+            function buttonConfig() {
+                if( jQuery('.mm-survey').hasClass('okay') ) {
+                    jQuery('.mm-next-btn button').prop('disabled', false);
+                }
+                else {
+                    jQuery('.mm-next-btn button').prop('disabled', true);
+                }
+            }
+
+            function goBack() {
+                jQuery('.mm-back-btn').on('click', function() {
+                    jQuery('.mm-survey-bottom').slideDown();
+                    jQuery('.mm-survey-results').slideUp();
+                });
+            }
+        </script>
+    </body>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+    <!-- plugin for jquery validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- link for jquery validation -->
+    <script src = "{{('/static/jquery/val.js')}}"> </script>
+</html>

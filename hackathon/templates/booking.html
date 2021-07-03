@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BOOKING</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="C:\Users\hp\Documents\python\myproject\hackathon\static\css\hack.css">
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}"> -->
+        <link rel="icon" href="data:,">        
+        <style>
+            body{
+                background-color: rgb(244, 248, 248);
+                font-family: 'Georgia', 'Times New Roman', 'Times', 'serif';
+                font-size:20px;
+                overflow-x: hidden;
+            }
+            .navbar{
+                height:100px;
+                font-size:20px;
+            }
+
+            .nav-link{
+                margin-right: 20px;
+            }
+            .filter{
+                background-color: lavender;
+                padding: 30px;
+                margin-top:1% ;  
+            }
+ 
+            .block1{
+                text-align: center; 
+                border-radius: 5px;      
+                background-color: rgb(238, 214, 192);
+                margin-top:1% ;  
+            }
+ 
+            .inner_block{
+                display: inline-block;
+                margin: 40px;
+                padding: 10px;
+            }   
+            .flip-card {
+                background-color: transparent;
+                width: 300px;
+                height: 400px;
+                border: 1px solid #f1f1f1;
+                perspective: 1000px; /* Remove this if you don't want the 3D effect */
+            }
+            
+            /* This container is needed to position the front and back side */
+            .flip-card-inner {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                transition: transform 0.8s;
+                transform-style: preserve-3d;
+            }
+            
+            /* Do an horizontal flip when you move the mouse over the flip box container */
+            .flip-card:hover .flip-card-inner {
+                transform: rotateY(180deg);
+            }
+            
+            /* Position the front and back side */
+            .flip-card-front, .flip-card-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                -webkit-backface-visibility: hidden; /* Safari */
+                backface-visibility: hidden;
+            }
+            
+            /* Style the front side (fallback if image is missing) */
+            .flip-card-front {
+                background-color: #bbb;
+                color: black;
+            }
+            
+            /* Style the back side */
+            .flip-card-back {
+                background-color: #bbb;
+                color: rgb(10, 10, 10);
+                transform: rotateY(180deg);
+            }
+ 
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand text-light" href="#"><strong>WE4YOU</strong></a>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse text-right text-light bg-dark" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#contact">Contact</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="{{ url_for('Booking_details',userid=userid) }}">Your Appoinments <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Login') }}">Logout</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+        <div class="container-fluid filter">
+            <h3 style="text-align: center;">Discover, Explore & Consult our Therapists</h3>
+            <h5 style="text-align: center;font-weight: lighter;">V4U's certified therapists are highly qualified and experienced mental health experts who,
+                understand that life can be tough sometimes. They help you make it easier</h5>
+            <hr>
+            
+             
+            {% if area %} 
+            
+                <form action="{{ url_for('Find',userid=userid) }}" method="POST">
+                    <div class="row" style="margin-top: 3%;">
+                        <div class="col-sm-4">
+                            <label for="area"><h5>Area of Expertise</h5></label>
+                            <input class="form-control" id="area" name="Area" value="{{area}}" readonly required>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            <label for="gender"><h5>Gender</h5></label>
+                            <select class="form-control" id="gender" name="Gender"  required> 
+                                <option value="Male" name="Male">Male</option>
+                                <option value="Female" name="Female">Female</option>
+                            </select>
+                        </div>
+ 
+                        <div class="col-sm-4">
+                            <label for="mode"><h5>Session Mode</h5></label>
+                            <select class="form-control" id="mode" name="Mode"  required> 
+                                <option value="Video">Video</option>
+                                <option value="Voice">Voice</option>
+                                <option value="Chat">Chat</option>
+                            </select>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-dark " style="margin-top: 2%; float: right;"><i class="fa fa-search"></i>&nbsp;&nbsp;Find</button>
+                        </div>
+                    </div>
+                </form>
+ 
+                {% else %} 
+                <form action="{{ url_for('Find',userid=userid) }}" method="POST">
+                    <div class="row" style="margin-top: 3%;">
+                        <div class="col-sm-4">
+                            <label for="area"><h5>Area of Expertise</h5></label>
+                            <select class="form-control" id="area" name="Area"  required> 
+                                <option value="Addiction">Addiction</option>
+                                <option value="Anger">Anger</option>
+                                <option value="Anxiety">Anxiety</option>                            
+                                <option value="Bipolar Disorder">Bipolar Disorder</option>
+                                <option value="Grief and Loss">Grief and Loss</option>
+                                <option value="Depression">Depression</option>
+                                <option value="OCD">OCD</option>
+                                <option value="Parenting">Parenting</option>                            
+                                <option value="Relationship">Relationship</option>                            
+                                <option value="Sleep">Sleep</option>
+                                <option value="Stress">Stress</option>
+                                <option value="Workplace">Workplace</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            <label for="gender"><h5>Gender</h5></label>
+                            <select class="form-control" id="gender" name="Gender"  required> 
+                                <option value="Male" name="Male">Male</option>
+                                <option value="Female" name="Female">Female</option>
+                            </select>
+                        </div>
+    
+                        <div class="col-sm-4">
+                            <label for="mode"><h5>Session Mode</h5></label>
+                            <select class="form-control" id="mode" name="Mode"  required> 
+                                <option value="Video">Video</option>
+                                <option value="Voice">Voice</option>
+                                <option value="Chat">Chat</option>
+                            </select>
+                        </div>
+                        
+                        <!-- <div class="col-sm-3">
+                            <label for="fees"><h5>Fees</h5></label>
+                            <select class="form-control" id="fees" name="Fees"  required> 
+                                <option value="500">&#8377; 500</option>
+                                <option value="1000">&#8377; 1000</option>
+                                <option value="1500">&#8377; 1500</option>
+                                <option value="2000">&#8377; 2000</option>
+                                <option value="2500">&#8377; 2500</option>
+                                <option value="3000">&#8377; 3000</option>
+                            </select>
+                        </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-dark " style="margin-top: 2%; float: right;"><i class="fa fa-search"></i>&nbsp;&nbsp;Find</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}                          
+        </div>
+        <div class="container-fluid block1" id="my_filter">
+            {% if out %} 
+            {% for message in out %} 
+            <div class="flip-card inner_block">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front" style="padding-top:10px ;">
+                    {% if message.Gender=="Female" %}
+                    <img src="https://www.pinclipart.com/picdir/middle/170-1701727_irma-pamela-acosta-m-woman-doctor-icon-clipart.png" alt="Avatar" style="width:200px;height:200px;">
+                    {% endif %}
+                    {% if message.Gender=="Male" %}
+                    <img src="https://i.dlpng.com/static/png/6978629_preview.png" alt="Avatar" style="width:200px;height:200px;">
+                    {% endif %} 
+                    <h1 style="padding-top:10px ;">  {{ message.Therapist_name }}</h1>
+                    <p><i class="fas fa-user-md"></i>  {{ message.Specialist }}</p>
+                    <p><i class="fas fa-stethoscope"></i>  {{ message.Experience }} years</p>
+                  </div>
+                  <div class="flip-card-back" style="padding-top:20px ;">
+                    <h4 style="padding-top: 5px;">AREA OF EXPERTISE</h4>                    
+                    <p style="text-align:center;margin: 10px; font-size: larger;">{{ message.Area}}</p>
+                    <h4 style="padding-top: 10px;">SESSION MODE</h4>
+                    <p style="text-align:center;margin: 10px; font-size: larger;">{{ message.Mode }}</p>
+                    <h4 style="padding-top: 15px;">FEES : &#8377; {{ message.Fees }}</h4>
+                    
+                    <form action="{{ url_for('Booking_and_send',therapist_id=message.TherapistId,name=message.Therapist_name,area=message.Area,mode=message.Mode,fees=message.Fees,userid=userid) }}"  method="GET">
+                        <button type="submit" class="btn btn-dark btn-lg">Book a session</button>
+                    </form>                  
+                    
+                  </div>
+                </div>
+            </div>
+            {% endfor %} 
+            {% else %} 
+            <h1 style="height: 200px;margin-top: 3%;padding-top: 15px;">No Therapists found. Please try expanding your search</h1>
+            {% endif %}            
+        </div>             
+    </body>
+</html>

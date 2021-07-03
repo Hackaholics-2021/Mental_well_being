@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <!-- favicon -->
+        <link rel="icon" href="data:,">
+        <style>
+            body{
+                background-color: rgb(244, 248, 248);
+                font-family: 'Georgia', 'Times New Roman', 'Times', 'serif';
+                font-size:20px;
+                overflow-x: hidden;
+            }
+            /* navbar */
+            
+            .card{
+                background-color:white;
+                text-decoration:none;
+                text-align:center;
+                border:none;
+                margin-top:20px;
+                height:350px;
+            }
+            
+            /* Gaunisha home page */
+            
+            /* brain image */
+            .brain-image{
+                position:relative;
+                left:80px;
+                top:60px;
+                
+            }
+            /* your mind matters */
+            .brain-text{
+                position:absolute;
+                
+                color:rgb(82, 64, 64);
+                right:15%;
+                top:15%;
+                font-size:90px;
+            }
+            /* why choose us */
+            .choose,.help{
+                position:absolute;
+                width:100%;
+                height:350px;
+                top:710px;
+                left:5%;
+            }
+
+            /* heading under whychoose us */
+            .choose h3,p{
+                position:absolute;
+                right:20%;
+                top:15%;
+                color:rgb(82, 64, 64);
+            }
+            /* paras inside why choose us */
+            .choose p{
+                top:30%;
+                right:10%;
+            }
+            /* how can we help bar */
+            .help{
+                background-color:rgb(218, 211, 211);
+                text-align:center;
+                padding:30px;
+                display:block;
+                left:0px;
+                top:180%;
+                height:600px;
+            }
+            /* cards in carousel */
+
+            /* Previous and next links in cards */
+            .help a{
+                color:rgb(82, 64, 64);
+            }
+            /* how does it work */
+            .how-it-works{
+                position:absolute;
+                width:100%;
+                text-align:center;
+                padding:30px;
+                display:block;
+                top:280%;
+                height:500px;
+            }
+
+            /* Front-line worker */
+            .front-line{
+                top:350%;
+                
+            }
+
+            /* who needs consultations */
+            .who-needs-consultation{
+                top:425%;
+                background-color:rgb(218, 211, 211);
+                height:450px;
+                width:100%;
+                left:0%;
+            }
+            .who-needs-consultation p{
+                font-size:20px;
+                
+            }
+            /* how consultation helps */
+            .how-cons-helps{
+                top:500%;
+                height:450px;
+                width:100%;
+                left:5%;
+            }
+            .how-cons-helps h3{
+                right:70px;
+            }
+            .how-cons-helps p{
+                font-size:20px;
+                right:0%;
+                left:1%;
+            }
+
+            /* .footer */
+            .footer{
+                background-color:rgb(94, 50, 50);
+                position:absolute;
+                top:600%;
+                width:100%;
+                height:600px;
+                color:white;
+            }
+
+            .footer .Navigation1{
+                position:absolute;
+                left:40px;
+                top:40px;
+            }
+            .footer .rest{
+                position:absolute;
+                top:50%;
+                left:45%;
+                margin-right:20px;
+            }
+            .footer p{
+                position:absolute;
+                top:85%;
+                left:30%;
+                margin-right:20px;
+            }
+            .footer .Navigation2{
+                position:absolute;
+                left:20%;
+                top:40px;
+            }
+            .footer .Navigation3{
+                position:absolute;
+                left:48%;
+                top:40px;
+            }
+            .footer .Navigation4{
+                position:absolute;
+                left:80%;
+                top:40px;
+            }
+            .footer .Navigation5{
+                position:absolute;
+                left:3%;
+                top:300px;
+            }
+            .navbar{
+                height:100px;
+                font-size:20px;
+            }
+
+            .nav-link{
+                margin-right: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Nav bar at top and site name -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand text-light" href="{{ url_for('User_home',userid=userid)}}"><strong>WE4YOU</strong></a>
+            <h2 style="padding-left:200px; position:absolute; top:30px;color:whitesmoke;">Hi {{name}}!</h2>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse text-right text-light bg-dark" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Booking_details',userid=userid) }}">Your Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Logout') }}">Logout</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+        <br>
+        <div class ="complaint_table" style="position:absolute; margin: 2%;width: 100%;">
+            <table class="table table-hover text-dark ">
+                
+                <div class = "container text-center ">
+
+                    <h1> Your bookings</h1>
+                    <h5>All Bookings are listed below . Click view button to view the Details.</h5>
+                    <br>
+                </div>
+                <tr>
+                    <th> Booking Id </th>
+                    <th> Therapist Name </th>
+                    <th> Description </th>
+                    <th> Action </th>
+                </tr>
+                {% for row in out %}
+                <tr>
+                    <td> {{row.BookingID}} </td>
+                    <td> {{row.Therapist_name}} </td>
+                    <td> {{row.Description}} </td>
+                    <td> 
+                        <button type = "button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit{{row.BookingID}}"> View </button>
+                    </td>
+
+                </tr>
+                <div id="edit{{row.BookingID}}" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"> View Details </h4>
+                                <button type="button"  class="close" data-dismiss="modal">&times;</button>
+                            </div>
+        
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action = "#">
+        
+                                    <!--label for="id"> ID: </label-->
+                                    <input type="hidden" name="Id" value="{{row.BookingID}}">
+        
+                                    <label for = "Mode" class = "lbl"> Mode : </label>
+                                    <select class="form-control input_type" id="Mode" name = "Mode">
+                                        <option value = "" id = "select" disabled> Select </option>
+                                        <option value = "Video" {{ 'selected' if row.Mode == 'Video'}} disabled> Video </option>
+                                        <option value = "Voice" {{ 'selected' if row.Mode == 'Voice'}} disabled> Voice </option>
+                                        <option value = "Chat" {{ 'selected' if row.Mode == 'Chat'}} disabled> Chat </option>
+                                    </select> 
+                                
+                                    <br>
+        
+                                    <!-- <label for = "description" class = "lbl"> Therapist Name : </label><br>
+                                
+                                    <input type="text" name="Doctor_name" value="{{row.Therapist_name}}" readonly>
+        
+                                    <br>
+                                    <br> -->
+                                    <label for = "Area" class = "lbl"> Area : </label>
+        
+                                    <select class="form-control input_type" id="Area" name = "Area">
+                                        <option value = "" id = "select" disabled> Select </option>
+                                        <option value = "Addiction" {{ 'selected' if row.Area == 'Addiction'}} disabled> Addiction </option>
+                                        <option value = "Anger" {{ 'selected' if row.Area == 'Anger'}} disabled> Anger </option>
+                                        <option value = "Anxiety" {{ 'selected' if row.Area == 'Anxiety'}} disabled> Anxiety </option>
+                                        <option value = "Bipolar Disorder" {{ 'selected' if row.Area == 'Bipolar Disorder'}} disabled> Bipolar Disorder </option>
+                                        <option value = "Grief and Loss" {{ 'selected' if row.Area == 'Grief and Loss'}} disabled> Grief and Loss </option>
+                                        <option value = "Depression" {{ 'selected' if row.Area == 'Depression'}} disabled>Depression </option>
+                                        <option value = "OCD" {{ 'selected' if row.Area == 'OCD'}} disabled> OCD </option>
+                                        <option value = "Parenting" {{ 'selected' if row.Area == 'Parenting'}} disabled> Parenting </option>
+                                        <option value = "Relationship" {{ 'selected' if row.Area == 'Relationship'}} disabled> Relationship </option>
+                                        <option value = "Sleep" {{ 'selected' if row.Area == 'Sleep'}} disabled> Sleep </option>
+                                        <option value = "Stress" {{ 'selected' if row.Area == 'Stress'}} disabled> Stress </option>
+                                        <option value = "Workplace" {{ 'selected' if row.Area == 'Workplace'}} disabled> Workplace </option>
+
+                                    </select> 
+                                    
+                                    <br>
+        
+                                    <label for = "status" class = "lbl"> Fees : </label>
+        
+                                    <input class="form-control input_type" id="status" name = "status" value={{row.Fees}} readonly>
+                                        <!-- <option value = "" id = "select" disabled> Select </option>
+                                        <option value = "500" {{ 'selected' if row.Fees == 500}} disabled > 500 </option>
+                                        <option value = "1000" {{ 'selected' if row.Fees == 1000}} disabled > 1000 </option>
+                                        <option value = "1500" {{ 'selected' if row.Fees == 1500}} disabled > 1500 </option>
+                                        <option value = "2000" {{ 'selected' if row.Fees == 2000}} disabled > 2000 </option>
+                                        <option value = "2500" {{ 'selected' if row.Fees == 2500}} disabled > 2500 </option>
+                                        <option value = "3000" {{ 'selected' if row.Fees == 3000}} disabled > 3000 </option>
+
+                                    </select> -->
+                                    <br>
+
+                                    <label for = "time" class = "lbl"> Time Slot : </label>
+        
+                                    <input class="form-control input_type" id="time" name = "Time" value="{{ row.Time_slot }}" readonly>
+                                        
+                                    <br>
+                                    
+                                    <div class="form-group">
+                                        <div class="modal-footer">
+                                            <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal"> Close </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            {% endfor %}
+    
+            </table>
+        </div>
+    </body>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+    <!-- plugin for jquery validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- link for jquery validation -->
+    <script src = "{{('/static/jquery/val.js')}}"> </script>
+</html>
+
+
+
+
+

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>booking</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://github.com/rubyeffect/easy_fill/tree/master/lib/easy_fill-0.0.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}">
+        
+        <style>
+            body{
+                background-color:rgb(206, 206, 206);
+                font-family: 'Georgia', 'Times New Roman', 'Times', 'serif';
+                font-size:20px;
+                overflow-x: hidden;
+            }
+
+            .navbar{
+                height:100px;
+                font-size:20px;
+            }
+
+            .nav-link{
+                margin-right: 20px;
+            }
+            form {
+                max-width: 500px;
+                margin-bottom: 5%;
+                padding:30px;
+                background: #f4f7f8;
+                border-radius: 8px;
+                
+            }
+ 
+ 
+            input[type="text"],
+            input[type="password"],
+            input[type="date"],
+            input[type="datetime"],
+            input[type="email"],
+            input[type="number"],
+            input[type="search"],
+            input[type="tel"],
+            input[type="time"],
+            input[type="url"],
+            textarea,
+            select {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            font-size: 16px;
+            height: auto;
+            margin: auto;
+            outline: 0;
+            padding: 8px;
+            width: 100%;
+            background-color: #e8eeef;
+            color: black;
+            box-shadow: 0 1px 0rgba(0,0,0,0.03) inset;
+            margin-bottom: 30px;
+            }
+
+            input[type="radio"]
+            input[type="checkbox"]
+            {
+            margin: 0 4px 8px 0;
+            }
+ 
+            select {
+            padding: 6px;
+            height: 32px;
+            border-radius: 2px;
+            }
+            fieldset {
+            margin-bottom: 30px;
+            border: none;
+            }
+ 
+            legend {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            }
+ 
+            label {
+            display: block;
+            margin-bottom: 8px;
+            }
+ 
+            label.light {
+            font-weight: 300;
+            display: inline;
+            }
+ 
+            .number {
+            background-color: #5fcf80;
+            color: #fff;
+            height: 30px;
+            width: 30px;
+            display: inline-block;
+            font-size: 0.8em;
+            margin-right: 4px;
+            line-height: 30px;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+            border-radius: 100%;
+            }
+ 
+            @media screen and (max-width:1200px) {
+                form{
+                    align-items: center;
+                    margin-left:100px;
+                    width:400px;
+                }
+                h3{
+                    margin-left:100px;
+                }
+            }
+            /* for scollbar in webpage */
+            ::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+                border-radius: 5px;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: rgb(139, 137, 137); 
+                border-radius: 10px;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #412d2d; 
+            }
+ 
+        </style>
+    </head>
+ 
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand text-light" href="#"><strong>WE4YOU</strong></a>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse text-right text-light bg-dark" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#contact">Contact</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="{{ url_for('Booking_details',userid=userid) }}">Your Appoinments <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Logout') }}">Logout</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-6">
+                <div class="row mt-3 pl-3">
+                    <h3 >BOOK AN APPOINTMENT</h3>
+                </div>
+                <form class="form align-items-center mt-3" action="{{ url_for('Booking_and_insert',userid=userid,therapist_id=therapist_id) }}" method="POST">
+                    {% with messages=get_flashed_messages() %} 
+                        {% if messages %} 
+                            {% for message in messages %} 
+                            <div class="alert alert-success ">
+                                
+                                <strong> {{ message }} </strong> 
+                            </div>
+                            {% endfor %} 
+                        {% endif %} 
+                        {% endwith %} 
+                        <div class="form-group">
+                            <label for="name">Name of the Doctor:</label>
+                            <input type="text" id="name" name="name" value="{{name}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="area">Area of Expertise:</label>
+                            <input type="text" id="area" name="area" value="{{area}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mode">Mode:</label>
+                            <input type="text" id="mode" name="mode" value="{{mode}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mode">Fees:</label>
+                            <input type="text" id="fees" name="fees" value="{{fees}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appointment_description">Appointment Description:</label>
+                            <textarea id="appointment_description" name="description" ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Date:</label>
+                            <input type="date" name="date" value="" id="datePickerId" ></input>
+                        </div>
+                        <script>
+                            datePickerId.min = new Date().toISOString().split("T")[0];
+                            </script>
+                        <br>
+
+                        <!-- <div class="form-group">
+                            <label for="time">Time:</label>
+                            <input type="time" name="time" value=""></input>
+                        </div>
+                        <br> -->
+
+                        <!-- <div class="form-group">
+                            <label for="meridian"><h5>AM/PM</h5></label>
+                            <select class="form-control" id="meridian" name="meridian"  required> 
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div> -->
+                        
+
+                        <div class="form-group">
+                            <label for="slot">Time Slot:</label>
+                            <select class="form-control" id="slot" name="slot"  required> 
+                                <option value="09:00 AM-11:00 AM">09:00 AM-11:00 AM</option>
+                                <option value="12:00 PM-02:00 PM">12:00 PM-02:00 PM</option>
+                                <option value="04:00 PM-06:00 PM">04:00 PM-06:00 PM</option>
+                                <option value="07:00 PM-09:00 PM">07:00 PM-09:00 PM</option>
+                            </select>
+                        </div>
+                    <button  class="btn btn-success btn-block p-3" type="submit" style="font-size:20px;">Book An Appointment</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

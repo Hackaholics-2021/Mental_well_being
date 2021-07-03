@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>REGISTER</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="C:\Users\hp\Documents\python\myproject\hackathon\static\css\hack.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}">
+        <link rel="icon" href="data:,">        
+        <style>
+            html{
+                background: url('https://images.theconversation.com/files/398682/original/file-20210504-21-nvnhnt.jpg?ixlib=rb-1.1.0&rect=17%2C17%2C5973%2C3970&q=45&auto=format&w=926&fit=clip') no-repeat center fixed;
+                background-size:cover;
+            } 
+            @media screen and (max-width: 1000px) {
+                .register{
+                    width:100%;
+                    font-size: small;
+                }
+            }           
+        </style>
+    </head>
+    <body> 
+        <div class="container register col-md-5">
+            <div class="container   text-black"><h2>REGISTER</h2></div>
+            <hr>
+            <div class="card-body ">
+              <form action="{{ url_for('Register') }}" method="post" >
+                <div class="form-group ">
+                    <label for="user_name"><h4>User Name</h4></label>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-light fas fa-user"> </span>
+                        </div>
+                        <input type="text" class="form-control" id="user_name" placeholder="Enter your User Name" name="User_name" required>
+                    </div>                      
+                </div>
+            
+                <div class="form-group">
+                    <label for="email"><h4>Email</h4></label>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-light fas fa-envelope"> </span>
+                        </div>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" name="Email" required>
+                    </div>                    
+                </div>
+                                  
+                
+                <br>
+                
+
+               
+                <div class="form-group">
+                    <label for="password"><h4>Password</h4></label>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text light fas fa-key"> </span>
+                        </div>
+                        <input type="password" class="form-control" id="password" placeholder="Enter your password" name="Password" required>
+                    </div>
+                    <div style="font-weight: bold;font-size: medium;"><input type="checkbox" onclick="myFunction1()"> Show Password</div>
+                <br>
+                </div>
+                    
+                <div class="form-group">
+                    <label for="password"><h4>Confirm Password</h4></label>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text light fas fa-key"> </span>
+                        </div>
+                        <input type="password" class="form-control" id="confirm_password" placeholder="Enter your password again" name="Confirm_password" required>
+                    </div>
+                    <div style="font-weight: bold;font-size: medium;"><input type="checkbox" onclick="myFunction2()"> Show Password</div>
+                <br>
+                </div>
+                    
+                <br>
+                <button type="submit" class="btn btn-dark btn-lg">Register</button>
+                <br>
+                <p class = "mt-2"> <h4>Already Registered? <a href = "{{ url_for('Login') }}"> Login here </a></h4> </p>
+
+              </form>  
+                            
+            </div>
+            
+        </div>
+        <script>
+            var password = document.getElementById("password") , confirm_password = document.getElementById("confirm_password");
+            function validatePassword(){
+                if(password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                }
+                else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
+
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        </script>
+        <script>
+            function myFunction1() {
+              var x = document.getElementById("password");
+              if (x.type === "password") {
+                x.type = "text";
+              } else {
+                x.type = "password";
+              }
+            }
+            </script>
+        <script>
+            function myFunction2() {
+              var x = document.getElementById("confirm_password");
+              if (x.type === "confirm_password") {
+                x.type = "text";
+              } else {
+                x.type = "confirm_password";
+              }
+            }
+            </script>
+    </body>
+</html>
