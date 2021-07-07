@@ -13,6 +13,7 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
+count=0
 
 @app.route('/',methods=["POST","GET"])
 def Home():
@@ -26,6 +27,20 @@ def User_home(userid):
     if request.method=="GET":
         return render_template('home.html',userid=userid)
 
+@app.route('/therapist_home/<therapistid>',methods=["POST","GET"])
+def Therapist_home(therapistid):
+    f=First()
+    if request.method=="GET":
+        return render_template('therapist_home.html',therapistid=therapistid)
+
+@app.route('/therapist_appointment/<therapistid>',methods=["POST","GET"])
+def Therapist_appointment(therapistid):
+    f=First()
+    if request.method=="GET":
+        out=f.get_info_therapist_appointment(email)
+        return render_template('therapist_appointment.html',therapistid=therapistid)
+
+
 @app.route('/login',methods=["POST","GET"])
 def Login():
     f=First()
@@ -35,12 +50,19 @@ def Login():
         email=request.form["Email"]
         password=request.form["Password"]
         out=f.get_email_user(email)
+        output=f.get_email_therapist_login(email)
         if out:
             if out['Password']==password:
                 return render_template("home.html",name=out['User_name'],userid=out['UserID'])            
             else:
                 flash("Password is wrong.Please enter correct password")
                 return render_template("login.html",email=out['Email'])
+        elif output:
+            if output['Password']==password:
+                return render_template("therapist_home.html",name=output['Therapist_name'],therapistid=output['TherapistId'])            
+            else:
+                flash("Password is wrong.Please enter correct password")
+                return render_template("login.html",email=output['Email'])
         else:
             flash("Email you have entered has not been registered. Please register")
             return render_template("login.html")
@@ -64,7 +86,31 @@ def Register():
             }
             out=f.insert_info_user(data)
             flash("You've been registered successfully!")
-            return render_template("new_user_home.html")
+            return render_template("login.html")
+
+@app.route('/therapist_register',methods=["POST","GET"])
+def Therapist_register():
+    global count
+    f=First()
+    if request.method=="GET":
+        return render_template('therapist_reg.html')
+    if request.method=="POST":
+        areas = request.form.getlist('Area')
+        count+=1
+        data={
+            'Title':request.form['Title'],
+            'Therapist_name':request.form['Therapist_name'],
+            'TherapistId':count,
+            'Specialist':request.form['Specialist'],
+            'Gender':request.form['Gender'],
+            'Email':request.form['Email'],
+            'Experience':request.form['Experience'],
+            'Fees':request.form['Fees'],
+            'Password':request.form['Password']
+        }
+        out=f.insert_info_therapist(areas,data)
+        flash("You've been registered successfully!")
+        return render_template("login.html")
 
 
 @app.route('/find/<userid>',methods=["POST","GET"])
@@ -82,11 +128,33 @@ def Find(userid):
         
         return render_template("booking.html",out=out,userid=userid)
 
+@app.route('/find_for_front/<userid>/<type>',methods=["POST","GET"])
+def Find_for_front(userid,type):
+    f=First()
+    if request.method=="GET":
+        return render_template('booking.html',userid=userid,type=type)
+    if request.method=="POST":
+        Area=request.form['Area']
+        Gender=request.form['Gender']
+        Mode=request.form['Mode']
+        
+        
+        out=f.get_info_therapist(Gender,Area,Mode)
+        
+        return render_template("booking.html",out=out,userid=userid,type=type)
+
 @app.route('/booking_direct/<area>/<userid>',methods=["POST","GET"])
 def Booking_direct(area,userid):
     f=First()
     if request.method=="GET":
         return render_template('booking.html',area=area,userid=userid)
+
+@app.route('/booking_direct_for_front/<area>/<userid>/<type>',methods=["POST","GET"])
+def Booking_direct_for_front(area,userid,type):
+    f=First()
+    if request.method=="POST":
+        return render_template('booking.html',area=area,userid=userid,type=type)
+
 
 @app.route('/booking_and_insert/<userid>/<therapist_id>',methods=["POST","GET"])
 def Booking_and_insert(userid,therapist_id):
@@ -94,8 +162,10 @@ def Booking_and_insert(userid,therapist_id):
     if request.method=="GET":
         return render_template('new_booking.html',userid=userid,therapist_id=therapist_id)
     if request.method=="POST":
+        get_name=f.get_info_user(userid)
         data={
-            
+            'User_name':get_name['User_name'],
+            'Therapist_id':therapist_id,
             'Therapist_name':request.form['name'],
             'Area':request.form['area'],
             'Mode':request.form['mode'],
@@ -103,7 +173,8 @@ def Booking_and_insert(userid,therapist_id):
             'Date':request.form['date'],            
             'Description':request.form['description'],
             'Time_slot':request.form['slot'],
-            'UserID':userid
+            'UserID':userid,
+            'Status':"Opened"
         }
         mode=request.form['mode']
         date=request.form['date']
@@ -123,12 +194,61 @@ def Booking_and_insert(userid,therapist_id):
             mail.send(msg_to_client)    
             return render_template('new_booking.html',userid=userid,therapist_id=therapist_id)
 
+
+@app.route('/booking_and_insert_for_front/<userid>/<therapist_id>/<type>',methods=["POST","GET"])
+def Booking_and_insert_for_front(userid,therapist_id,type):
+    f=First()
+    if request.method=="GET":
+        return render_template('new_booking.html',userid=userid,therapist_id=therapist_id,type=type)
+    if request.method=="POST":
+        get_name=f.get_info_user(userid)
+        data={
+            'User_name':get_name['User_name'],
+            'Therapist_id':therapist_id,
+            'Therapist_name':request.form['name'],
+            'Area':request.form['area'],
+            'Mode':request.form['mode'],
+            'Fees':request.form['fees'],
+            'Date':request.form['date'],            
+            'Description':request.form['description'],
+            'Time_slot':request.form['slot'],
+            'Type':type,
+            'UserID':userid,
+            'Status':"Opened"            
+        }
+        mode=request.form['mode']
+        date=request.form['date']
+        slot=request.form['slot']
+        
+        reci=f.get_email_therapist(therapist_id)
+        user=f.get_info_user(userid)
+        out=f.insert_booking_details(data)
+        if out:
+            flash("Your Appointment has reached us !!!")
+            msg_to_doc = Message('subject', sender = 'hackaholics4@gmail.com', recipients=[reci['Email']])  
+            msg_to_doc.html = "<h3>Hi "+reci['Therapist_name'] +",</h3>"+"<br>This is <em><b>WE4YOU</b></em>, You have an appointment requesting a counselling session by "+user['User_name'] +" on "+date+" at a time slot "+slot+" through "+mode+" mode.<br><br> For further communications with your client contact using the Client's Email : <b>"+user['Email']+"</b>. Thank you !!!<br><br>Regards,<br>WE 4 YOU."  
+            # return "Mail Sent, Please check the mail id"
+            msg_to_client = Message('subject', sender = 'hackaholics4@gmail.com', recipients=[user['Email']])  
+            msg_to_client.html = "<h3>Hi "+user['User_name'] +",</h3>"+"<br>This is <em><b>WE4YOU</b></em>, You have booked an appointment requesting a counselling session with Dr."+reci['Therapist_name']+" on "+date+" at a time slot "+slot+" through "+ mode +" mode.<br><br> For further communications with your Therapist in case of Delay , Please check your Appointments if it has been cancelled by your Therapist in case of their personal issues/timings. Thank you !!!<br><br>Regards,<br>WE 4 YOU."  
+            mail.send(msg_to_doc)
+            mail.send(msg_to_client)    
+            return render_template('new_booking.html',userid=userid,therapist_id=therapist_id,type=type)
+
+
+
 @app.route('/Booking_and_send/<therapist_id>/<name>/<area>/<mode>/<fees>/<userid>',methods=["POST","GET"])
 def Booking_and_send(therapist_id,name,area,mode,fees,userid):
     f=First()
 
     if request.method=="GET":
         return render_template('new_booking.html',therapist_id=therapist_id,name=name,area=area,mode=mode,fees=fees,userid=userid)
+
+@app.route('/Booking_and_send_for_front/<therapist_id>/<name>/<area>/<mode>/<fees>/<userid>/<type>',methods=["POST","GET"])
+def Booking_and_send_for_front(therapist_id,name,area,mode,fees,userid,type):
+    f=First()
+
+    if request.method=="GET":
+        return render_template('new_booking.html',therapist_id=therapist_id,name=name,area=area,mode=mode,fees=fees,userid=userid,type=type)
     
 
 @app.route('/self_assess/<userid>',methods=["POST","GET"])
@@ -213,7 +333,7 @@ def Ocd(userid):
 def Relationship(userid):
     f=First()
     if request.method=="GET":
-        return render_template('relationship.html')
+        return render_template('relationship.html',userid=userid)
     if request.method=="POST":
         ans=[]
         score=0 
@@ -363,11 +483,11 @@ def Frontline_workers(userid):
 
 
 
-@app.route('/delivery/<userid>',methods=["POST","GET"])
-def Delivery(userid):
+@app.route('/delivery/<userid>/<type>',methods=["POST","GET"])
+def Delivery(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('delivery.html',userid=userid)
+        return render_template('delivery.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -444,13 +564,13 @@ def Delivery(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
-@app.route('/it/<userid>',methods=["POST","GET"])
-def It(userid):
+@app.route('/it/<userid>/<type>',methods=["POST","GET"])
+def It(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('it.html',userid=userid)
+        return render_template('it.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -527,13 +647,13 @@ def It(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
-@app.route('/govt_emp/<userid>',methods=["POST","GET"])
-def Govt_emp(userid):
+@app.route('/govt_emp/<userid>/<type>',methods=["POST","GET"])
+def Govt_emp(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('govt_emp.html',userid=userid)
+        return render_template('govt_emp.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -610,13 +730,13 @@ def Govt_emp(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
-@app.route('/customer_care/<userid>',methods=["POST","GET"])
-def Customer_care(userid):
+@app.route('/customer_care/<userid>/<type>',methods=["POST","GET"])
+def Customer_care(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('customer_care.html',userid=userid)
+        return render_template('customer_care.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -693,13 +813,13 @@ def Customer_care(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
-@app.route('/journalists/<userid>',methods=["POST","GET"])
-def Journalists(userid):
+@app.route('/journalists/<userid>/<type>',methods=["POST","GET"])
+def Journalists(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('journalists.html',userid=userid)
+        return render_template('journalists.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -776,13 +896,13 @@ def Journalists(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
-@app.route('/teachers/<userid>',methods=["POST","GET"])
-def Teachers(userid):
+@app.route('/teachers/<userid>/<type>',methods=["POST","GET"])
+def Teachers(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('teachers.html',userid=userid)
+        return render_template('teachers.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -859,13 +979,13 @@ def Teachers(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
-@app.route('/public_safety/<userid>',methods=["POST","GET"])
-def Public_safety(userid):
+@app.route('/public_safety/<userid>/<type>',methods=["POST","GET"])
+def Public_safety(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('public_safety.html',userid=userid)
+        return render_template('public_safety.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -942,14 +1062,14 @@ def Public_safety(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
 
-@app.route('/transport/<userid>',methods=["POST","GET"])
-def Transport(userid):
+@app.route('/transport/<userid>/<type>',methods=["POST","GET"])
+def Transport(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('transport.html',userid=userid)
+        return render_template('transport.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -1026,14 +1146,14 @@ def Transport(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
 
-@app.route('/lawyers/<userid>',methods=["POST","GET"])
-def Lawyers(userid):
+@app.route('/lawyers/<userid>/<type>',methods=["POST","GET"])
+def Lawyers(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('lawyers.html',userid=userid)
+        return render_template('lawyers.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -1110,14 +1230,14 @@ def Lawyers(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
 
-@app.route('/child_care/<userid>',methods=["POST","GET"])
-def Child_care(userid):
+@app.route('/child_care/<userid>/<type>',methods=["POST","GET"])
+def Child_care(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('child_care.html',userid=userid)
+        return render_template('child_care.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -1194,14 +1314,14 @@ def Child_care(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
 
-@app.route('/social_workers/<userid>',methods=["POST","GET"])
-def Social_workers(userid):
+@app.route('/social_workers/<userid>/<type>',methods=["POST","GET"])
+def Social_workers(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('social_workers.html',userid=userid)
+        return render_template('social_workers.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -1278,14 +1398,14 @@ def Social_workers(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
 
-@app.route('/doctors/<userid>',methods=["POST","GET"])
-def Doctors(userid):
+@app.route('/doctors/<userid>/<type>',methods=["POST","GET"])
+def Doctors(userid,type):
     f=First()
     if request.method=="GET":
-        return render_template('doctors.html',userid=userid)
+        return render_template('doctors.html',userid=userid,type=type)
     if request.method=="POST":
         ans=[]
                      
@@ -1362,7 +1482,7 @@ def Doctors(userid):
         return render_template('frontline_score.html',dep=dep,ang=ang,anx=anx,stress=stress,
         grief=grief,sleep=sleep,score=sleep,dep_score=dep_score,ang_score=ang_score,
         anx_score=anx_score,stress_score=stress_score,grief_score=grief_score,
-        sleep_score=sleep_score,area=area,userid=userid)
+        sleep_score=sleep_score,area=area,userid=userid,type=type)
 
 @app.route('/booking_details/<userid>',methods=["POST","GET"])
 def Booking_details(userid):
@@ -1374,8 +1494,39 @@ def Booking_details(userid):
             return render_template('booking_details.html',out=out,userid=userid)
         else:
             return render_template('booking_details.html',userid=userid)
-    
 
+@app.route('/therapist_appointment_details/<therapistid>',methods=["POST","GET"])
+def Therapist_appointment_details(therapistid):
+    f=First()
+    if request.method=="GET":        
+        out=f.get_therapist_appointment(therapistid)
+        print(out)
+        if out:
+            return render_template('therapist_appointment.html',out=out,therapistid=therapistid)
+        else:
+            return render_template('therapist_appointment.html',therapistid=therapistid)
+
+
+
+@app.route('/frontline_appointment_details/<therapistid>/<type>',methods=["POST","GET"])
+def Frontline_appointment_details(therapistid,type):
+    f=First()
+    if request.method=="GET":        
+        out=f.get_therapist_appointment_frontline(therapistid,type)
+        print(out)
+        if out:
+            return render_template('therapist_appointment.html',out=out,therapistid=therapistid)
+        else:
+            return render_template('therapist_appointment.html',therapistid=therapistid)
+
+    
+@app.route('/cancel_appointment/<BookingID>/<therapistid>',methods=["POST","GET"])
+def Cancel_appointment(BookingID,therapistid):
+    f=First()        
+    f.cancel_appointment(BookingID)
+    return redirect(url_for('Therapist_appointment_details', therapistid=therapistid))
+    
+        
 
 if __name__ =='__main__':  
     app.run(debug = True) 
