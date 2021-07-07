@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <!-- favicon -->
+        <link rel="icon" href="data:,">
+        <link rel="stylesheet" type="text/css" href="C:\Users\Admin\OneDrive\Documents\python\my project-gauni\hackathon\static\css\hack.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}">
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <style>
+            body{
+                background-color: rgb(218, 224, 226);
+                font-family: 'Georgia', 'Times New Roman', 'Times', 'serif';
+                font-size:20px;
+                overflow-x: hidden;
+            }
+            /* navbar */
+            
+            .card{
+                background-color:white;
+                text-decoration:none;
+                text-align:center;
+                border:none;
+                margin-top:20px;
+                height:350px;
+            }
+
+            @media screen and (max-width: 500px) {
+                .card-title {
+                    font-size: 15px;
+                }
+                .card{
+                    height:200px;
+                }
+                .how-it-works{
+                    display:none;
+                }
+            }
+            /* Gaunisha home page */
+            .navbar{
+                height:100px;
+                font-size:20px;
+            }
+
+            .nav-link{
+                margin-right: 20px;
+            }
+            /* brain image */
+            .brain-image{
+                display:inline;
+                margin-left:80px;
+                margin-top:auto;
+                margin-right:25%;
+            }
+            /* your mind matters */
+            .brain-text{
+                color:rgb(82, 64, 64);
+                margin-top:2%;
+                font-size:25px;
+            }
+            /* why choose us */
+            .choose h3,p{
+                color:rgb(82, 64, 64);
+            }
+
+            @media screen and (max-width: 1200px) {
+                .brain-text {
+                    font-size:10px;
+                    margin-left:40px;
+                }
+            }
+            /* how can we help bar */
+            .help{
+                background-color: rgb(163, 210, 228);
+                text-align:center;
+                padding:10px;
+            }
+            /* Previous and next links in cards */
+            .help a{
+                color:black;
+            }
+            /* .footer */
+            footer{
+                background-color: rgb(77, 50, 50);
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand text-light" href="{{ url_for('Therapist_home',therapistid=therapistid)}}"><strong>WE4YOU</strong></a>
+            <h2 style="padding-left:200px; position:absolute; top:30px;color:whitesmoke;">Hi {{name}}!</h2>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-right text-light bg-dark" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto" style="font-size: 20px;">
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="{{ url_for('Therapist_home',therapistid=therapistid)}}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Therapist_appointment_details',therapistid=therapistid)}}">Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">Appointment Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">Patient Survey</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Logout')}}">Logout</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+        
+        <div class="container-fluid-md" style="background-color: rgb(163, 210, 228);">
+            <div class="row">
+                <h2 class="brain-image image-fluid"><img src="https://www.uemo.eu/wp-content/uploads/2018/10/NPW-cartoon.jpg" height="300px" width="400px"></h2>
+                <h6 class="brain-text my-sm-auto    "><i>"The best way to find yourself is to lose<br> yourself in the service of others"</i></h6>
+                
+            </div>
+        </div>
+        <!-- Why choose us? -->
+        <!-- <div class="row p-3 m-auto text-center">
+                <div class="col-md-4 text-center">
+                    <h2><img src="https://i.pinimg.com/564x/77/ec/22/77ec22279b90e25735f5cd3428e23694.jpg" height="300px" width="300px"></h2>
+                </div>
+                <div class="col-md-8 text-center">
+                    <h3>Why Choose Us?</h3>
+                    <br>
+                    <p class="text-center mr-auto ml-6">V4U. is a dedicated online mental<br> health & holistic wellbeing platform,<br> spreading awareness for overall development <br>of mental and physical wellbeing<br> through its wide range of services for users in India <br>and around the world.</p>
+            
+                </div>
+        </div> -->
+        
+        <!-- are you a Front-line worker? -->
+        <br>
+        <div class="row m-3">
+            <div class="col-md-5 text-center">
+                <h2><img src="{{ url_for('static' ,filename='hands.png')}}" height="250px" width="350px"></h2>
+            </div>
+            <div class="col-md-7 text-center">
+                <h3><b>FRONTLINE WORKER</b></h3>
+                <br>
+                <br>
+                <h3><a href="{{ url_for('Frontline_appointment_details',therapistid=therapistid,type='front')}}" style="color:rgb(35, 126, 96)"><i>Click Here </a>to view your appointments of frontline Workers</i></h3></p>
+            </div>
+        </div>
+        <br>
+        <!-- we can help u with -->
+        <div class="help container-fluid-sm">
+            <h1>Areas You Handle</h1>
+            <section class="pt-1 pb-1 ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <a href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                                <i class="fas fa-angle-double-left"></i> Previous 
+                            </a>
+                        </div> 
+                        <div class="col-6 text-right">
+                            
+                            <a href="#carouselExampleIndicators2" role="button" data-slide="next">
+                                Next <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                        <div class="col-12">
+                            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                                
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://i.pinimg.com/564x/6a/b3/0e/6ab30e02fa959b87ddbb1813c23c5bb8.jpg" >
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="{{ url_for('Depression',userid=userid) }}" class="text-dark">Depression</a></h4>
+                                                        
+                                                    </div>
+              
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://i.pinimg.com/564x/19/2e/e7/192ee7f191f1825effc1bd477d4d28c2.jpg"  >
+                                                    <div class="card-body ">
+                                                        <h4 class="card-title"><a href="{{ url_for('Stress',userid=userid) }}" class="text-dark">Stress</a></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://img.freepik.com/free-vector/obsessive-compulsive-disorder-concept-illustration_114360-3562.jpg?size=338&ext=jpg">
+                                                    <div class="card-body ">
+                                                        <h4 class="card-title"><a href="{{ url_for('Ocd',userid=userid) }}" class="text-dark">OCD</a></h4>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://t4.ftcdn.net/jpg/02/22/96/91/360_F_222969131_YlPqcfmyJAQgg5qbYIFMgpOsGnGMMYQl.jpg">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="{{ url_for('Bipolar_disorder',userid=userid) }}" class="text-dark">BiPolar Disorder</a></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+              
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://graphicriver.img.customer.envatousercontent.com/files/314452098/preview.jpg?auto=compress%2Cformat&fit=crop&crop=top&w=590&h=590&s=9e2003b5df5a29218be6a2958a3fafa0">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="{{ url_for('Anxiety',userid=userid) }}" class="text-dark">Anxiety</a></h4>
+                                                        
+                                                    </div>
+                
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://media.istockphoto.com/vectors/print-vector-id1128971553?k=6&m=1128971553&s=612x612&w=0&h=rCj2QhTNgnm13v9sRKOi9gJejm-jckn7tg5fRoJPGoM=">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="{{ url_for('Relationship',userid=userid) }}" class="text-dark">Relationship</a></h4>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://thumbs.dreamstime.com/b/young-woman-suffer-insomnia-sleepy-lady-can-not-sleep-mental-problems-female-try-to-sleep-pillow-under-197764423.jpg">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="{{ url_for('Sleep',userid=userid) }}" class="text-dark">Sleep</a></h4>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://media.istockphoto.com/vectors/young-africanamerican-woman-using-a-smartphone-with-many-social-media-vector-id970942892?b=1&k=6&m=970942892&s=612x612&w=0&h=v2Beqs-LfkHfpdwzX661g2F7FvMBKURHfND2BaYULLg=">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="{{ url_for('Addiction',userid=userid) }}" class="text-dark">Addiction</a></h4>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+              
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://thumbs.dreamstime.com/b/vector-cartoon-illustration-weeping-woman-emotions-grief-crying-girl-close-her-eyes-her-hands-weeping-woman-emotions-grief-132926178.jpg">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="{{ url_for('Grief_and_loss',userid=userid) }}" class="text-dark">Grief and Loss</a></h4>
+                                                    </div>
+                
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://previews.123rf.com/images/iconicbestiary/iconicbestiary1612/iconicbestiary161200126/67653072-broken-businessman-talking-to-psychologist-psychotherapy-counseling-business-man-dealing-with-stress.jpg">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="#" class="text-dark">Individual counselling</a></h4>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://previews.123rf.com/images/topvectors/topvectors1710/topvectors171000450/87668867-unhappy-family-couple-characters-talking-to-female-psychologist-about-their-problems-psychotherapy-c.jpg">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="#" class="text-dark">Couples Therapy</a></h4>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 mb-3">
+                                                <div class="card">
+                                                    <img class="img-fluid" alt="100%x280" src="https://stories.freepiklabs.com/storage/13012/mental-health-amico-2995.png">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title"><a href="#" class="text-dark">Psychiatry</a></h4>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="row how-it-works">   
+            <div class="col-2"></div>
+                <div class="col-md-8 text-left" id="container">
+                    <head>
+                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                        <script type="text/javascript">
+                          google.charts.load('current', {'packages':['corechart']});
+                          google.charts.setOnLoadCallback(drawChart);
+                          function drawChart() {
+                    
+                            var data = google.visualization.arrayToDataTable([
+                              ['Video Mode', '2014'],
+                              ['Chat Mode',     1844],
+                              ['Voice Mode',      300],
+                              ['Video Mode',  991],
+                            //   ['Involving Rollover', 692],
+                            //   ['Involving Roadway Departure',    1368],
+                            //   ['Involving Intersection',    802]
+                            ]);
+                    
+                            var options = {
+                              pieSliceText: 'Video Mode',
+                              slices: {  0: {color: '#279399', offset: 0.2},   
+                                            1: {color: '#5AC2C6'},
+                                            2: {color: '#1F5052'},
+                                            3: {color: '#9f6407'},
+                                            // 4: {color: '#7c4600'},
+                                            // 5: {color: '#5d2d00'},              
+                                  }, 
+                    
+                                backgroundColor: 'rgb(218, 224, 226)',
+                               chartArea: {left:0, top:50, width:'100%', height:'70%'},
+                            };
+                    
+                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            chart.draw(data, options);
+                          }
+                    
+                        </script>
+                        <style>
+                          #piechart {
+                              min-height:350px;
+                           }
+                        </style>
+                      </head>
+                    
+                    <div class="text-center">
+                    <h1>Appointment Review</h1>
+                    <div id="piechart"></div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <footer class="pt-5 text-light" id="contact">
+            <div class="row ">
+                <div class="" style="margin-left: 30%;">
+                    <a href="{{ url_for('Therapist_home',therapistid=therapistid)}}" class="text-light">Home</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <a href="#" class="text-light">Appointments</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <a href="#" class="text-light">FAQ</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <a href="#" class="text-light">Appointment review</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <a href="#" class="text-light">Patient Survey</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    
+                </div>
+            </div> 
+            <br>
+            <br>
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <h3>Stay connect with us</h3>
+                    <h1><i class="fab fa-facebook text-white"></i>&nbsp&nbsp&nbsp&nbsp<i class="fab fa-linkedin-in text-white"></i>&nbsp&nbsp&nbsp&nbsp<i class="fab fa-twitter text-white"></i>&nbsp&nbsp&nbsp&nbsp<i class="fab fa-instagram text-white"></i></h1>
+                    <p class="text-white">&COPY;All rights reserved - WE4YOU.</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+    <!-- plugin for jquery validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- link for jquery validation -->
+    <script src = "{{('/static/jquery/val.js')}}"> </script>
+</html>

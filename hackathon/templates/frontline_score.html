@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <!-- favicon -->
+        <link rel="icon" href="data:,">
+        <link rel="stylesheet" type="text/css" href="C:\Users\Admin\OneDrive\Documents\python\my project-gauni\hackathon\static\css\hack.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}">
+        <style>
+            body{
+                
+                font-family: Georgia;
+                background-color: rgb(211, 216, 185);
+                max-width:100%;height:auto;
+                overflow: hidden;
+            }
+            
+
+            .chart-skills {
+            margin: 0 auto;
+            padding: 0;
+            list-style-type: none;
+            }
+
+            .chart-skills *,
+            .chart-skills::before {
+            box-sizing: border-box;
+            }
+
+
+            /* CHART-SKILLS STYLES
+            –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+            .chart-skills {
+            position: relative;
+            width: 350px;
+            height: 175px;
+            
+            overflow: hidden;
+            }
+
+            .chart-skills::before,
+            .chart-skills::after {
+            position: absolute;
+            
+            }
+
+            .chart-skills::before {
+            content: '';
+            width: inherit;
+            height: inherit;
+            border: 45px solid rgba(121, 42, 42, 0);
+            border-bottom: none;
+            border-top-left-radius: 175px;
+            border-top-right-radius: 175px;
+            }
+
+            .chart-skills::after {
+            /* content: 'Top Skills'; */
+            left: 50%;
+            bottom: 10px;
+            transform: translateX(-50%);
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: cadetblue;
+            }
+
+            .chart-skills li {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: inherit;
+            height: inherit;
+            border: 45px solid;
+            border-top: none;
+            border-bottom-left-radius: 175px;
+            border-bottom-right-radius: 175px;
+            transform-origin: 50% 0;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            animation-fill-mode: forwards;
+            animation-duration: .4s;
+            animation-timing-function: linear;
+            }
+
+            .chart-skills li:nth-child(1) {
+            z-index: 6;
+            border-color: rgb(72, 172, 185);
+            animation-name: rotate-one;
+            }
+            .chart-skills li:nth-child(2) {
+            z-index: 5;
+            border-color: firebrick;
+            animation-name: rotate-two;
+            animation-delay: .4s;
+            }
+
+            .chart-skills li:nth-child(3) {
+            z-index: 4;
+            border-color: rgb(231, 241, 82);
+            animation-name: rotate-three;
+            animation-delay: .8s;
+            }
+
+            .chart-skills li:nth-child(4) {
+            z-index: 3;
+            border-color: rgb(85, 58, 30);
+            animation-name: rotate-four;
+            animation-delay: 1.2s;
+            }
+
+            .chart-skills li:nth-child(5) {
+            z-index: 2;
+            border-color: rgb(77, 52, 85);
+            animation-name: rotate-five;
+            animation-delay: 1.6s;
+            }
+            .chart-skills li:nth-child(6) {
+            z-index: 1;
+            border-color: rgb(108, 110, 108);
+            animation-name: rotate-six;
+            animation-delay: 2.0s;
+            }
+            .chart-skills li:nth-child(7) {
+            z-index: 0;
+            border-color: rgba(0, 0, 0,0.15);
+            animation-name: rotate-seven;
+            animation-delay: 2.0s;
+            }
+
+
+            .chart-skills span {
+            position: absolute;
+            font-size: .90rem;
+            backface-visibility: hidden;
+            animation: fade-in .4s linear forwards;
+            }
+
+            .chart-skills li:nth-child(1) span {
+            top: 5px;
+            left: 10px;
+            transform: rotate(-21.6deg);
+            }
+
+            .chart-skills li:nth-child(2) span {
+            top: 10px;
+            left: 10px;
+            transform: rotate(-49.2deg);
+            animation-delay: .4s;
+            }
+
+            .chart-skills li:nth-child(3) span {
+            top: 18px;
+            left: 10px;
+            transform: rotate(-80.4deg);
+            animation-delay: .8s;
+            }
+
+            .chart-skills li:nth-child(4) span {
+            top: 20px;
+            left: 10px;
+            transform: rotate(-120deg);
+            animation-delay: 1.2s;
+            }
+            .chart-skills li:nth-child(5) span {
+            top: 10px;
+            left: 10px;
+            transform: rotate(-160deg);
+            animation-delay: 1.2s;
+            }
+            .chart-skills li:nth-child(6) span {
+            top:5px;
+            left: 10px;
+            transform: rotate(-180deg);
+            animation-delay: 1.2s;
+            }
+            
+
+            /* ANIMATIONS
+            –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+            @keyframes rotate-one {
+            100% {
+                transform: rotate(var(--dep));
+                /**
+                * 12% => 21.6deg
+                */
+            }
+            }
+
+            @keyframes rotate-two {
+            0% {
+                transform: rotate(var(--dep));
+            }
+            100% {
+                transform: rotate(var(--ang));
+                /**
+                * 32% => 57.6deg 
+                * 57.6 + 21.6 => 79.2deg
+                */
+            }
+            }
+
+            @keyframes rotate-three {
+            0% {
+                transform: rotate(var(--ang));
+            }
+            100% {
+                transform: rotate(var(--anx));
+                /**
+                * 34% => 61.2deg 
+                * 61.2 + 79.2 => 140.4deg
+                */
+            }
+            }
+
+            @keyframes rotate-four {
+            0% {
+                transform: rotate(var(--anx));
+            }
+            100% {
+                transform: rotate(var(--stress));
+                /**
+                * 22% => 39.6deg  
+                * 140.4 + 39.6 => 180deg
+                */
+            }
+            }
+
+            @keyframes rotate-five {
+            0% {
+                transform: rotate(var(--stress));
+            }
+            100% {
+                transform: rotate(var(--grief));
+                /**
+                * 22% => 39.6deg  
+                * 140.4 + 39.6 => 180deg
+                */
+            }
+            }
+
+            @keyframes rotate-six {
+            0% {
+                transform: rotate(var(--grief));
+            }
+            100% {
+                transform: rotate(var(--sleep));
+                /**
+                * 22% => 39.6deg  
+                * 140.4 + 39.6 => 180deg
+                */
+            }
+            }
+
+
+            @keyframes rotate-seven {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(180deg);
+                /**
+                * 22% => 39.6deg  
+                * 140.4 + 39.6 => 180deg
+                */
+            }
+            }
+
+            @keyframes fade-in {
+            0%,
+            90% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+            }
+
+
+
+            .comments iframe{
+                position: absolute;
+                top:30%;                
+                background-color: rgba(255, 255, 255, 0);
+                width:100%;
+            }
+            .navbar{
+                height:100px;
+                font-size: 20px;
+                
+            }
+            
+            .col-sm-6{
+                float: left;
+                width:50%;
+            }
+            @media screen  and (max-width: 800px){
+                .col-sm-6 {
+                    width: 50%; /* The width is 100%, when the viewport is 800px or smaller */
+                }
+                .chart-skills,.palette{
+                    display: none;
+                }
+            }
+            
+            .site-content{
+                position: absolute;
+                top:140px;
+                width: 100%;               
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Nav bar at top and site name -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand text-light" href="#"><b>WE4YOU</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse text-right text-light bg-dark" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto" style="padding-right: 20px;">
+                    <li class="nav-item active" style="padding-right: 20px;" >
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 20px;">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#about">About</a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 20px;">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#contact">Contact</a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 20px;">
+                        <a class="nav-link text-light" href="{{ url_for('Booking_details',userid=userid) }}">Your Appointments</a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 20px;">
+                        <a class="nav-link text-light" href="{{ url_for('Logout') }}">Logout</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+         <!-- depression anger anxiety sleeplessness stress  -->
+
+        <div class="container-fluid site-content">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="donut" style="text-align: center;z-index: 5;">
+                        <h2>Your Score : {{score}}</h2>
+                        <ul class="chart-skills">
+                            
+                            <li style="--dep:{{dep}}deg">
+                              <span ></span>
+                            </li>
+                            <li style="--ang:{{ang}}deg">
+                              <span ></span>
+                            </li>
+                            <li style="--anx:{{anx}}deg">
+                              <span ></span>
+                            </li>
+                            
+                            <li style="--stress:{{stress}}deg">
+                              <span ></span>
+                            </li>
+                            <li style="--grief:{{grief}}deg">
+                              <span ></span>
+                            </li>
+                            <li style="--sleep:{{sleep}}deg">
+                              <span ></span>
+                            </li>
+                            <li><span></span></li>
+                        </ul>
+                        
+                    </div>
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="comments container" style="margin-top: 10%;">
+                        {% if score>120 %}
+                            <h2 style="margin:5%;text-align: center;">Wow!! You have a great mental stability..Keep it up!</h2>
+                            <iframe src="{{ url_for('static', filename='6k2.gif') }}" height="450px"  frameborder="0" scrolling="no" ></iframe>
+                        
+                        {% elif score<120 and score>60 %}
+                            <h2>Woo hoo!. You are doing fine..If you want to consult a doctor here your are.. </h2>
+                            <form action="{{ url_for('Find_for_front',userid=userid,type=type) }}"  method="GET">
+                                <button type="submit" class="btn btn-dark btn-lg" style="z-index: 100;float: left;">Book a session</button>
+                            </form>
+                            <iframe src="{{ url_for('static', filename='second.gif') }}" height="450px"  frameborder="0" scrolling="no" ></iframe>
+            
+                            
+                        {% else %} 
+                            <h2>Oops! you have a bad mental stability..coz your Score for <em style="color: rgb(25, 92, 95);">{{area}}</em>  is below Average.. Would you mind to consult a doctor ASAP.</h2>
+                            <form action="{{ url_for('Booking_direct_for_front',area=area,userid=userid,type=type) }}"  method="POST">
+                                <button type="submit" class="btn btn-dark btn-lg" style="margin-top: 1%;">Book a session</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row palette">
+                <div  class="col-sm-6" style="margin-top: 2%;font-family: Arial, Helvetica, sans-serif;font-size: large;margin-left: 8%;">
+                    <span style="background-color: rgb(72, 172, 185);margin:1%;padding:7px"></span><span>Depression </span>
+                    &nbsp;&nbsp;
+                    <span style="background-color:firebrick;margin:1%;padding:7px"></span><span>Anger </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="background-color:rgb(231, 241, 82);margin:1%;padding:7px"></span><span>Anxiety </span><br><br><br>
+
+                    <span style="background-color:rgb(85, 58, 30);margin:1%;padding:7px"></span><span>Stress </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="background-color:rgb(77, 52, 85);margin:1%;padding:7px"></span><span>Grief and Loss </span>
+                    &nbsp;&nbsp;
+                    <span style="background-color:rgb(108, 110, 108);margin:1%;padding:7px"></span><span>Sleeplessness </span>
+                    
+                </div>
+            </div>
+            <div class="container-fluid" style="background-color: rgba(228, 228, 228, 0);margin: 1% 0% 0% 0%;text-align: center;padding: 20px;border-radius: 5px;">
+                <h3><b>Don't just stop here</b>, Go on and Take Tests on different Areas and Find out how Mentally strong you are!!!</h3><br>
+                <h5> <em><b>WE 4 YOU</b></em> provides different Areas to take test on how your Mental well-being is.
+                    Also you are made to directly contact the <em><b>Therapist Experts</b></em> in just a few clicks.
+                </h5>
+                <br>
+                <button class="btn btn-dark btn-lg"><a href="{{ url_for('Self_assess',userid=userid) }}" class="text-light" style="text-decoration: none;">SELF ASSESSMENT</a></button>
+            </div>    
+        </div>
+        
+    </body>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+    <!-- plugin for jquery validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- link for jquery validation
+    <script src = "{{('/static/jquery/val.js')}}"> </script> -->
+</html>

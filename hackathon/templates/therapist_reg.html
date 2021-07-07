@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>THERAPIST REGISTER</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="C:\Users\hp\Documents\python\myproject\hackathon\static\css\hack.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}">
+        <link rel="icon" href="data:,"> 
+    </head>
+    <style>
+        body{
+                background: url('https://merriam-webster.com/assets/mw/images/article/art-wap-landing-mp-lg/alt-5ae892611bf1a-5168-1472832016f2509f3889266323039a33@1x.jpg') no-repeat center fixed;
+                
+                font-family: 'Georgia', 'Times New Roman', 'Times', 'serif';
+                background-color: rgb(226, 226, 226);
+                background-size:cover;
+                
+            } 
+        .therapist_reg{
+            margin: 3%;
+            padding: 20px;
+            /* position: absolute;
+            left:150px; */
+            margin-left: 12%;
+            background-color: rgba(222, 232, 253, 0.425);
+            border-radius: 5px;
+            border-left:solid 4px rgb(102, 102, 102);
+        }
+    </style>
+    <body>
+        <div class="container-fluid" style="background-color: rgb(211, 236, 236);height: 80px;padding: 10px;border:solid 3px rgb(128, 127, 127)">
+            <header>
+                <h1>Welcome To WE4YOU</h1>
+            </header>
+        </div>
+        <form action="{{ url_for('Therapist_register') }}" method="POST">
+            <div class="container therapist_reg">
+                <h3>THERAPIST REGISTRATION</h3>
+                <div class="row">                    
+                    <div class="col-md-6 form-group" style="margin-top: 3%;font-size: large;">
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio1">
+                              <input type="radio" class="form-check-input"  name="Title" value="Mr." checked>Mr.
+                            </label>
+                          </div>
+                          <div class="form-check-inline">
+                            <label class="form-check-label" for="radio2">
+                              <input type="radio" class="form-check-input" name="Title" value="Mrs.">Mrs.
+                            </label>
+                          </div>
+                          <div class="form-check-inline">
+                            <label class="form-check-label" for="radio3">
+                              <input type="radio" class="form-check-input" name="Title" value="Ms.">Ms.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="name" style="font-weight: bold;" >Name</label>
+                        <input type="text" class="form-control"  name="Therapist_name" required>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="specialist" style="font-weight: bold;">Specialist</label>
+                        <select class="form-control"  name="Specialist">
+                            <option value="Counselling Psychologist">Counselling Psychologist</option>
+                            <option value="Psychologist">Psychologist</option>
+                            <option value="Clinical Psychologist">Clinical Psychologist</option>
+                            <option value="Psychotherapist">Psychotherapist</option>
+                            <option value="Psychiatrist">Psychiatrist</option>
+                            <option value="Neuro Psychologist">Neuro Psychologist</option>
+                            <option value="Rehabilitation Psychologist">Rehabilitation Psychologist</option>
+                            <option value="Corporate Wellbeing Psychologist">Corporate Wellbeing Psychologist</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="gender" style="font-weight: bold;">Gender</label>
+                        <select class="form-control"  name="Gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="email" style="font-weight: bold;">Email</label>
+                        <input type="email" class="form-control" name="Email" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="pwd" style="font-weight: bold;">Password</label>
+                        <input type="password" class="form-control" name="Password" id="password" required>
+                        <br>
+                        <div style="font-size: medium;"><input type="checkbox" onclick="myFunction1()"> Show Password</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="exp" style="font-weight: bold;">Experience</label>
+                        <input type="number" class="form-control" name="Experience" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="fees" style="font-weight: bold;">Fees per Consultation</label>
+                        <select class="form-control"  name="Fees">
+                            <option value="500">&#8377; 500</option>
+                            <option value="1000">&#8377; 1000</option>
+                            <option value="1000">&#8377; 1500</option>
+                            <option value="1000">&#8377; 2000</option>
+                            <option value="1000">&#8377; 2500</option>
+                            <option value="1000">&#8377; 3000</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-3 form-group">                        
+                        <label for="area" style="font-weight: bold;" name="Area">Area of Expertises</label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Addiction" name="Area"> Addiction</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Anger" name="Area"> Anger</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Anxiety" name="Area"> Anxiety</label>
+                        </div>
+                        
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Bipolar Disorder" name="Area"> Bipolar Disorder</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 form-group" style="margin-top: 35px;">
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Depression" name="Area"> Depression</label>
+                        </div>  
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Grief and Loss" name="Area"> Grief and Loss</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="OCD" name="Area"> OCD</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Parenting" name="Area"> Parenting</label>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-3 form-group" style="margin-top: 35px;">  
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Sleep" name="Area"> Sleep</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Stress" name="Area"> Stress</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Relationship" name="Area"> Relationship</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Workplace" name="Area">  Workplace</label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-dark btn-lg">Register</button>
+                <br>
+                <p class = "mt-2"> <h4>Already Registered? <a href = "{{ url_for('Login') }}"> Login here </a></h4> </p>
+            </div>
+        </form> 
+        <script>
+            function myFunction1() {
+              var x = document.getElementById("password");
+              if (x.type === "password") {
+                x.type = "text";
+              } else {
+                x.type = "password";
+              }
+            }
+        </script>      
+    </body>
+</html>

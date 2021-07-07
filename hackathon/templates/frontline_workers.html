@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <!-- favicon -->
+        <link rel="icon" href="data:,">
+        <link rel="stylesheet" type="text/css" href="C:\Users\Admin\OneDrive\Documents\python\my project-gauni\hackathon\static\css\hack.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/hack.css') }}">
+        <style>
+          body{
+                background-color: rgb(244, 248, 248);
+                font-family: 'Georgia', 'Times New Roman', 'Times', 'serif';
+                font-size:20px;
+                overflow-x: hidden;
+            }
+            /* navbar */
+            
+            .card{
+                background-color:white;
+                text-decoration:none;
+                text-align:center;
+                border:none;
+                margin-top:20px;
+                height:350px;
+            }
+            .category{
+                background-color:rgb(218, 211, 211);
+                text-align:center;
+            }
+            
+            @media screen and (max-width: 500px) {
+                .card-title {
+                    font-size: 15px;
+                }
+                .card{
+                    height:200px;
+                }
+            }
+
+            @media screen and (max-width: 800px) {
+                .card-title {
+                    font-size: 15px;
+                }
+                .card{
+                    height:250px;
+                }
+            }
+            .navbar{
+                height:100px;
+                font-size:20px;
+            }
+ 
+            .nav-link{
+                margin-right: 20px;
+            }
+     </style>
+    </head>
+    <body>
+        <!-- Nav bar at top and site name -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand text-light" href="{{ url_for('User_home',userid=userid)}}"><strong>WE4YOU</strong></a>
+            <h2 style="padding-left:200px; position:absolute; top:30px;color:whitesmoke;">Hi {{name}}!</h2>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse text-right text-light bg-dark" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('User_home',userid=userid) }}#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Booking_details',userid=userid) }}">Your Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('Logout') }}">Logout</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+        <div class="container-fluid-sm text-center" style="margin: 3%;">
+            <h1 class="text-dark">Which category would you like to take a test on?</h1>
+        </div>
+        <div class="category col-12 m-3">
+            
+            <div class=" container-sm">
+                <div class="row">
+                    
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://www.doctornewman.co.uk/wp-content/uploads/2021/03/hospital-workers-clipart-7.jpg" >
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ url_for('Doctors',userid=userid,type='front') }}" class="text-dark">Health Care Workers</a></h4>
+                                
+                            </div>
+    
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://image.freepik.com/free-vector/ecologically-responsible-waste-garbage-collecting_1284-10150.jpg"  >
+                            <div class="card-body ">
+                                <h4 class="card-title"><a href="{{ url_for('Social_workers',userid=userid,type='front') }}" class="text-dark">Social Workers</a></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://previews.123rf.com/images/matsu5/matsu51610/matsu5161000033/66602662-child-care-workers.jpg">
+                            <div class="card-body ">
+                                <h4 class="card-title"><a href="{{ url_for('Child_care',userid=userid,type='front') }}" class="text-dark">Child care</a></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://www.pinclipart.com/picdir/big/20-201802_icon-image-creator-pushsafer-send-push-notifications-icon.png">
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ url_for('Journalists',userid=userid,type='front') }}" class="text-dark">Journalists</a></h4>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="row">
+                    
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://thumbs.dreamstime.com/b/female-lawyer-flat-vector-illustration-judge-justice-be-kind-to-lawyers-day-ready-to-use-female-lawyer-flat-vector-177143912.jpg">
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ url_for('Lawyers',userid=userid,type='front') }}" class="text-dark">Lawyers and advocates</a></h4>
+                                
+                            </div>
+    
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://previews.123rf.com/images/sudowoodo/sudowoodo1507/sudowoodo150700082/43128965-two-young-soldiers-man-and-woman-in-camouflage-combat-uniform-saluting-cute-flat-cartoon-style-isola.jpg">
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ url_for('Public_safety',userid=userid,type='front') }}" class="text-dark">Public safety and National Security</a></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="{{ url_for('static', filename='transport.png') }}" style="height: 300px;">
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ url_for('Transport',userid=userid,type='front') }}" class="text-dark">Transport</a></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://www.johnhandleybearings.com/wp-content/uploads/2018/03/Customer-service.jpg">
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ url_for('Customer_care',userid=userid,type='front') }}" class="text-dark">Customer care workers</a></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="row">
+                    
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://mh-2-stockagency.panthermedia.net/media/previews/0024000000/24180000/~round-table-in-the-meeting_24180110_high.jpg">
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ url_for('Govt_emp',userid=userid,type='front') }}" class="text-dark">Government Employees</a></h4>
+                            </div>
+    
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" style="height: 300px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQecy7j965JKiDm87Vsw-uY2PQJSoF-b4n2oJ0lrNitwV_Ipnz9dcMgq3vgQQG25V_K8aQ&usqp=CAU">
+                            <div class="card-body">
+                                <h4 class="card-title" ><a href="{{ url_for('It',userid=userid,type='front') }}" class="text-dark" >IT Professionals</a></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://thumbs.dreamstime.com/b/delivery-courier-ride-scooter-motorcycle-food-design-vector-illustration-75831127.jpg">
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ url_for('Delivery',userid=userid,type='front') }}" class="text-dark">Delivery Services</a></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <div class="card">
+                            <img class="img-fluid" alt="100%x280" src="https://st4.depositphotos.com/7781012/22400/v/950/depositphotos_224001962-stock-illustration-kids-in-kindergarten-fun-children.jpg">
+                            <div class="card-body ">
+                                <h4 class="card-title"><a href="{{ url_for('Teachers',userid=userid,type='front') }}" class="text-dark">Teachers</a></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+ 
+    </body>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+    <!-- plugin for jquery validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"> </script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+ 
+    <!-- link for jquery validation -->
+    <!-- <script src = "{{('/static/jquery/val.js')}}"> </script> -->
+</html>
