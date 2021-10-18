@@ -2,6 +2,8 @@ MENTAL WELL BEING FOR FRONTLINE WORKERS-SINGLE STEP CONSULTATION WEBSITE
 
 YOUTUBE : https://youtu.be/5NAKLVf9MT0
 
+PPT : https://docs.google.com/presentation/d/1fXoGSbiHaQ5mCiiQZboXf3bqimAVtycK/edit?usp=sharing&ouid=112977597524177200646&rtpof=true&sd=true
+
 ABSTRACT 
  Mental wellness is the need of the hour, with everyone dealing with the  second wave in their own way and with their own struggles due to the lockdown  restrictions and the overall COVID situation. Building a solution specially designed for  front-line workers - healthcare professionals, and law enforcement officers, journalists,  and the like - to keep tabs on their mental health and consult therapists in a single step. 
 Frontline workers can take a quiz. Based on the score, the client is directed to Therapist  Consultation and book an appointment on a desired date and time. Both client &  therapist get email regarding Appointment details. 
